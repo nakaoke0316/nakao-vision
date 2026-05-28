@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ナカオ工業 ビジョン</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #1B2A4A;
+      --navy2:  #243660;
+      --blue:   #1D4ED8;
+      --green:  #166534;
+      --red:    #C0392B;
+      --bg:     #F4F5F7;
+      --white:  #FFFFFF;
+      --text:   #1F2937;
+      --mute:   #374151;
+      --line:   #E5E7EB;
+      /* layer colors */
+      --v-bg:   #1B2A4A;
+      --v-acc:  #E88;
+      --s-bg:   #1D4ED8;
+      --s-light:#EFF6FF;
+      --m-bg:   #166534;
+      --m-light:#F0FDF4;
+      --zoom: 1;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: var(--text); background: var(--white); line-height: 1.8;
+    }
+
+    /* ── Sticky Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: var(--navy);
+      display: flex; align-items: center; gap: 0;
+      height: 52px; overflow: hidden;
+    }
+    .nav-logo {
+      color: var(--white); font-weight: 800; font-size: .85rem;
+      letter-spacing: .12em; padding: 0 1.4rem; white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,.15);
+    }
+    .nav-layers {
+      display: flex; flex: 1; height: 100%;
+    }
+    .nav-layer {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; letter-spacing: .12em;
+      color: rgba(255,255,255,.8); text-decoration: none;
+      border-right: 1px solid rgba(255,255,255,.08);
+      transition: background .2s, color .2s;
+    }
+    .nav-layer:hover { color: var(--white); background: rgba(255,255,255,.06); }
+    .nav-layer.v { border-top: 3px solid #E88; }
+    .nav-layer.s { border-top: 3px solid #60A5FA; }
+    .nav-layer.m { border-top: 3px solid #4ADE80; }
+    .nav-layer .en { opacity: .5; font-size: .62rem; margin-right: .3rem; }
+
+    /* ── Layer badge ── */
+    .layer-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .68rem; font-weight: 800; letter-spacing: .18em;
+      padding: .3rem .9rem; border-radius: 2rem; margin-bottom: 1rem;
+    }
+    .badge-v { background: rgba(232,136,136,.15); color: #E88; border: 1px solid rgba(232,136,136,.35); }
+    .badge-s { background: rgba(96,165,250,.12); color: #60A5FA; border: 1px solid rgba(96,165,250,.3); }
+    .badge-m { background: rgba(74,222,128,.12); color: #16A34A; border: 1px solid rgba(74,222,128,.3); }
+
+    /* ── Sections ── */
+    section { padding: 5rem 2rem; }
+    .inner      { max-width: 1100px; margin: 0 auto; zoom: var(--zoom); }
+    .inner-wide { max-width: 1400px; margin: 0 auto; zoom: var(--zoom); }
+    .quote-inner { zoom: var(--zoom); }
+    .sec-title { font-size: clamp(1.5rem,3vw,2.1rem); font-weight: 900; color: var(--navy); line-height: 1.35; margin-bottom: 1.2rem; }
+    .sec-lead  { font-size: 1rem; color: var(--text); font-weight: 500; line-height: 2; margin-bottom: 2rem; text-wrap: balance; }
+    .divider-v { width: 3rem; height: 3px; background: #E88;    margin-bottom: 1.8rem; }
+    .divider-s { width: 3rem; height: 3px; background: #60A5FA; margin-bottom: 1.8rem; }
+    .divider-m { width: 3rem; height: 3px; background: #4ADE80; margin-bottom: 1.8rem; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy2) 60%, #2E4070 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 7rem 2rem 5rem; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ""; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg,transparent,transparent 60px,rgba(255,255,255,.016) 60px,rgba(255,255,255,.016) 61px);
+    }
+    .hero-layer-bar {
+      display: flex; gap: .6rem; margin-bottom: 2.5rem;
+    }
+    .hlb { padding: .3rem .9rem; border-radius: 2rem; font-size: .7rem; font-weight: 700; letter-spacing: .12em; }
+    .hlb-v { background: rgba(232,136,136,.2); color: #E88;    border: 1px solid rgba(232,136,136,.4); }
+    .hlb-s { background: rgba(96,165,250,.15); color: #93C5FD; border: 1px solid rgba(96,165,250,.35); }
+    .hlb-m { background: rgba(74,222,128,.12); color: #86EFAC; border: 1px solid rgba(74,222,128,.3); }
+    .hero-sub { color: rgba(255,255,255,.85); font-size: .75rem; letter-spacing: .25em; margin-bottom: 1.2rem; }
+    .hero-catch {
+      font-size: clamp(2rem,5vw,3.5rem); font-weight: 900; color: var(--white);
+      line-height: 1.35; letter-spacing: .03em; margin-bottom: 1.6rem;
+    }
+    .hero-catch em { color: #E88; font-style: normal; }
+    .hero-desc { max-width: 540px; color: rgba(255,255,255,.95); font-size: 1rem; line-height: 2; margin-bottom: 2.8rem; }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,.5); font-size: .68rem; letter-spacing: .2em;
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── VISION sections ── */
+    #vision-why { background: var(--bg); }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .why-card {
+      background: var(--white); border-radius: .75rem; padding: 1.2rem 1rem;
+      border-left: 4px solid var(--navy); box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    }
+    .why-card.accent { border-left-color: var(--red); }
+    .why-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: .55rem; text-wrap: balance; }
+    .why-card p  { font-size: .95rem; color: var(--text); line-height: 1.9; text-wrap: balance; }
+
+    #vision-quote { background: var(--navy); }
+    .quote-inner  { max-width: 820px; margin: 0 auto; text-align: center; }
+    .quote-src    { color: rgba(255,255,255,.7); font-size: .7rem; letter-spacing: .2em; margin-bottom: 2.4rem; }
+    blockquote {
+      font-size: clamp(1.25rem,2.8vw,1.85rem); font-weight: 700; color: var(--white);
+      line-height: 2.1; margin-bottom: 2rem; position: relative; padding: 0 .5rem;
+    }
+    blockquote::before {
+      content: "\201C"; font-size: 9rem; color: rgba(255,255,255,.07);
+      position: absolute; top: -3rem; left: -2.5rem;
+      font-family: Georgia,serif; line-height: 1;
+    }
+    .quote-attr { color: rgba(255,255,255,.8); font-size: .85rem; letter-spacing: .12em; margin-bottom: .2rem; }
+    .quote-pills { display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; margin-top: 2.4rem; }
+    .pill { background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); font-size: .76rem; padding: .35rem .9rem; border-radius: 2rem; border: 1px solid rgba(255,255,255,.25); }
+    /* 社長の言葉スライド：縦センタリング */
+    #vision-quote { display: flex; flex-direction: column; justify-content: center; }
+
+    /* ── 3-Layer Structure Diagram ── */
+    #layer-map { background: var(--white); }
+    .layer-diagram {
+      margin: 2rem auto; max-width: 700px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .ld-row { display: flex; align-items: stretch; margin-bottom: .4rem; }
+    .ld-tag {
+      writing-mode: vertical-rl; text-orientation: mixed;
+      font-size: .65rem; font-weight: 800; letter-spacing: .15em;
+      padding: .5rem .4rem; border-radius: .4rem 0 0 .4rem;
+      min-width: 2rem; display: flex; align-items: center; justify-content: center;
+    }
+    .ld-tag.v { background: #E88;    color: var(--white); }
+    .ld-tag.s { background: #60A5FA; color: var(--white); }
+    .ld-tag.m { background: #4ADE80; color: #166534; }
+    .ld-body {
+      flex: 1; border-radius: 0 .5rem .5rem 0; padding: 1.1rem 1.4rem;
+    }
+    .ld-body.v { background: #FFF5F5; border: 1.5px solid rgba(232,136,136,.3); border-left: none; }
+    .ld-body.s { background: #EFF6FF; border: 1.5px solid rgba(96,165,250,.3); border-left: none; }
+    .ld-body.m { background: #F0FDF4; border: 1.5px solid rgba(74,222,128,.3); border-left: none; }
+    .ld-title { font-size: 1.3rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; letter-spacing:.02em; }
+    .ld-sub   { font-size: 1rem; color: var(--text); line-height: 1.85; }
+    .ld-arrow { text-align: center; color: var(--navy); font-size: 1.8rem; font-weight: 900; margin: .35rem 0; }
+
+    /* ── STRATEGY ── */
+    #strategy-pillars { background: var(--s-light); }
+    .pillar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 1.8rem; }
+    .pillar-card {
+      background: var(--white); border-radius: .75rem; padding: 1.6rem;
+      border-top: 4px solid var(--blue); box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    }
+    .pillar-num  { font-size: .68rem; letter-spacing: .15em; color: var(--blue); font-weight: 800; margin-bottom: .4rem; }
+    .pillar-title { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; }
+    .pillar-desc  { font-size: .84rem; color: var(--text); line-height: 1.85; }
+    .pillar-label { font-size: .65rem; font-weight: 800; letter-spacing: .12em; color: var(--blue); margin-top: 1rem; margin-bottom: .3rem; }
+    .pillar-list  { margin: 0 0 0 1rem; padding: 0; font-size: .78rem; color: var(--text); line-height: 1.85; list-style: disc; }
+    .pillar-list li { margin-bottom: .1rem; }
+
+    #strategy-engines { background: var(--white); }
+    .engine-wrap { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1rem; align-items: center; margin-top: 1.8rem; }
+    .engine-card {
+      background: var(--s-light); border-radius: 1rem; padding: 1.8rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07); border-top: 5px solid var(--blue);
+    }
+    .engine-icon  { font-size: 2rem; margin-bottom: .7rem; }
+    .engine-title { font-size: 1.1rem; font-weight: 900; color: var(--navy); margin-bottom: .3rem; }
+    .engine-lead  { font-size: .8rem; color: var(--blue); font-weight: 700; margin-bottom: .7rem; }
+    .engine-list  { padding-left: 1rem; }
+    .engine-list li { font-size: .82rem; color: var(--text); margin-bottom: .25rem; }
+    .engine-center { text-align: center; }
+    .engine-center .xmark { font-size: 2rem; color: var(--navy); font-weight: 900; }
+    .engine-center .xlabel { font-size: .68rem; color: var(--mute); white-space: nowrap; }
+    .engine-note {
+      background: var(--navy); color: var(--white); border-radius: .75rem;
+      padding: 1.2rem 1.6rem; margin-top: 1.4rem; font-size: .88rem; font-weight: 600; line-height: 1.8; text-align: center;
+    }
+
+    /* ── MISSION ── */
+    #mission-dept { background: var(--m-light); }
+    .dept-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 1.8rem; }
+    .dept-card {
+      background: var(--white); border-radius: .75rem; padding: 1.6rem;
+      border-top: 4px solid var(--green); box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    }
+    .dept-person { font-size: .72rem; letter-spacing: .1em; color: var(--green); font-weight: 700; margin-bottom: .3rem; }
+    .dept-title  { font-size: .98rem; font-weight: 800; color: var(--navy); margin-bottom: .6rem; }
+    .dept-mission { font-size: .84rem; color: var(--text); line-height: 1.85; text-wrap: balance; }
+    .dept-link   { margin-top: .8rem; font-size: .78rem; color: var(--blue); font-weight: 700; }
+
+    #mission-saas { background: var(--white); }
+    .saas-intro {
+      background: var(--m-light); border-left: 4px solid var(--green);
+      border-radius: .5rem; padding: 1rem 1.4rem; font-size: .88rem;
+      color: #166534; line-height: 1.85; margin-bottom: 2rem;
+    }
+    /* SaaS Map embed */
+    .saas-map-wrap { overflow-x: auto; }
+    .saas-layer {
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 8px;
+    }
+    .saas-layer-title {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .saas-layer-title::after { content:''; flex:1; height:1px; background:currentColor; opacity:.2; }
+    .sl-ext  { background:#e8edf2; border:1.5px solid #b0bec5; }
+    .sl-ext .saas-layer-title { color:#546e7a; }
+    .sl-ret  { background:#fdecea; border:1.5px dashed #e57373; }
+    .sl-ret .saas-layer-title { color:#c62828; }
+    .sl-self { background:#fff; border:2px solid #37474f; }
+    .sl-self .saas-layer-title { color:#263238; }
+    .card-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .sc {
+      border-radius:8px; padding:8px 14px; font-size:12px; font-weight:600;
+      text-align:center; border:1.5px solid; min-width:110px; line-height:1.3;
+    }
+    .sc sub { display:block; font-size:9.5px; font-weight:400; margin-top:2px; opacity:.75; }
+    .sc-ext  { background:#eceff1; border-color:#78909c; color:#37474f; }
+    .sc-ret  { background:#ffebee; border-color:#ef9a9a; color:#b71c1c; }
+    .sc-done { background:#e8f5e9; border-color:#388e3c; color:#1b5e20; }
+    .sc-wip  { background:#e3f2fd; border-color:#1976d2; color:#0d47a1; }
+    .sc-plan { background:#fff;    border-color:#455a64; color:#263238; }
+    .sc-tbd  { background:#fafafa; border-color:#bdbdbd; color:#757575; }
+    .sc-chk  { background:#fffde7; border-color:#f9a825; color:#5d4037; }
+    .saas-conn { text-align:center; font-size:11px; color:#90a4ae; padding:3px 0; }
+    /* Roadmap */
+    .rm { background:#fff; border:1.5px solid #cfd8dc; border-radius:10px; padding:16px 20px; margin-top:16px; }
+    .rm-title { font-size:11px; font-weight:700; color:#546e7a; letter-spacing:.06em; text-transform:uppercase; margin-bottom:12px; }
+    .rm-steps { display:flex; align-items:center; flex-wrap:wrap; gap:0; }
+    .rms { display:flex; flex-direction:column; align-items:center; gap:3px; }
+    .rms-num {
+      width:26px; height:26px; border-radius:50%; font-size:11px; font-weight:700;
+      display:flex; align-items:center; justify-content:center; color:#fff; background:#546e7a;
+    }
+    .rms-num.done { background:#388e3c; }
+    .rms-num.wip  { background:#1976d2; }
+    .rms-text { font-size:10.5px; color:#37474f; font-weight:600; text-align:center; line-height:1.3; max-width:82px; }
+    .rms-note { font-size:9px; color:#e57373; text-align:center; }
+    .rms-arr  { font-size:16px; color:#b0bec5; margin:0 4px; padding-bottom:18px; }
+
+    /* ── Future ── */
+    #future { background: var(--navy); }
+    .future-h  { font-size: clamp(1.4rem,3vw,1.9rem); font-weight:900; color:var(--white); margin-bottom:.6rem; }
+    .future-ld { color:rgba(255,255,255,.9); font-size:.92rem; line-height:2; margin-bottom:1.2rem; }
+    .timeline { position:relative; padding-left:2rem; }
+    .timeline::before { content:""; position:absolute; left:.5rem; top:.4rem; bottom:.4rem; width:2px; background:rgba(255,255,255,.3); }
+    .tl-item { position:relative; margin-bottom:1.2rem; }
+    .tl-dot { position:absolute; left:-1.6rem; top:.4rem; width:.75rem; height:.75rem; border-radius:50%; background:var(--red); border:2px solid #fff; }
+    .tl-year  { font-size:.7rem; letter-spacing:.18em; color:rgba(255,255,255,.75); margin-bottom:.15rem; font-weight:700; }
+    .tl-title { font-size:.98rem; font-weight:800; color:var(--white); margin-bottom:.25rem; }
+    .tl-layer { font-size:.68rem; font-weight:700; letter-spacing:.1em; padding:.15rem .6rem; border-radius:1rem; margin-bottom:.3rem; display:inline-block; }
+    .tl-layer.v { background:rgba(232,136,136,.3); color:#FFB3B3; }
+    .tl-layer.s { background:rgba(96,165,250,.25); color:#BFDBFE; }
+    .tl-layer.m { background:rgba(74,222,128,.2); color:#BBF7D0; }
+    .tl-desc  { font-size:.84rem; color:rgba(255,255,255,.88); line-height:1.8; }
+
+    /* ── Closing ── */
+    #closing {
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy2) 60%, #2E4070 100%);
+      text-align: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    #closing .inner { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; }
+    .closing-big {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 900; color: var(--white);
+      line-height: 1.5; margin-bottom: 2rem;
+      letter-spacing: .03em;
+    }
+    .closing-big em { color: #E88; font-style: normal; }
+    .closing-sub {
+      font-size: clamp(.95rem, 1.6vw, 1.15rem);
+      color: rgba(255,255,255,.85); line-height: 2.2;
+      max-width: 560px; margin: 0 auto 2.4rem;
+    }
+    .closing-divider { width: 3rem; height: 3px; background: #E88; margin: 0 auto 2rem; }
+    .closing-name { font-size:.95rem; color: rgba(255,255,255,.9); font-weight:700; letter-spacing:.1em; }
+    .closing-date { font-size:.78rem; color: rgba(255,255,255,.45); margin-top:.5rem; }
+    footer { background:var(--navy); color:rgba(255,255,255,.3); text-align:center; padding:1.4rem; font-size:.7rem; letter-spacing:.1em; }
+
+    /* Responsive */
+    @media(max-width:860px) {
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:680px) {
+      nav .nav-layers .en { display:none; }
+      .why-grid, .pillar-grid, .dept-grid { grid-template-columns:1fr; }
+      .engine-wrap { grid-template-columns:1fr; }
+      .engine-center { flex-direction:row; }
+    }
+    /* ══════════════════════════════════
+       SLIDE SYSTEM
+    ══════════════════════════════════ */
+    html, body { height: 100%; overflow: hidden; }
+
+    /* 各セクションをスライドとして配置 */
+    section {
+      position: fixed !important;
+      top: 52px; left: 0; right: 0; bottom: 56px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(80px);
+      transition: opacity .38s ease, transform .4s cubic-bezier(.4,0,.2,1);
+      z-index: 1;
+      padding-top: 0 !important;
+      padding-bottom: 1rem !important;
+      padding-left: 1.2rem !important;
+      padding-right: 1.2rem !important;
+    }
+    /* スライドモード：slideラベル直下のinnerに上余白を付与 */
+    section > .inner, section > .inner-wide { padding-top: 1.2rem; }
+    section.is-current {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+      z-index: 10;
+    }
+    section.is-prev {
+      opacity: 0;
+      transform: translateX(-80px);
+    }
+    #hero { min-height: unset; height: 100%; padding-top: 3rem; }
+    #hero .scroll-hint { display: none; }
+
+    /* ── スライドタイトルバー（セクション上部）── */
+    .slide-label {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: .7rem;
+      padding: .55rem 1.4rem; font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; color: var(--mute);
+    }
+    .slide-label .sl-num { color: var(--mute); font-size: .65rem; opacity: .6; }
+    #vision-quote .slide-label,
+    #future .slide-label       { background: rgba(27,42,74,.92); color: rgba(255,255,255,.9); border-bottom-color: rgba(255,255,255,.15); }
+    #vision-quote .slide-label .sl-num,
+    #future .slide-label .sl-num { opacity: .7; }
+
+    /* ── ボトムナビ ── */
+    .slide-foot {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 56px; z-index: 300;
+      background: var(--navy2);
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; gap: .8rem; padding: 0 1.2rem;
+    }
+    .slide-btn {
+      background: none; border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.6); cursor: pointer;
+      padding: .28rem .9rem; border-radius: .3rem; font-size: .85rem;
+      transition: all .18s;
+    }
+    .slide-btn:hover:not(:disabled) { color: #fff; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.35); }
+    .slide-btn:disabled { opacity: .2; cursor: default; }
+    .slide-dots { display: flex; gap: 5px; flex: 1; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .slide-dot {
+      width: 7px; height: 7px; border-radius: 50%; border: none; cursor: pointer; padding: 0;
+      background: rgba(255,255,255,.18); transition: background .2s, transform .2s;
+    }
+    .slide-dot.active       { background: #fff;    transform: scale(1.45); }
+    .slide-dot[data-layer="v"]        { background: rgba(232,136,136,.35); }
+    .slide-dot[data-layer="v"].active { background: #E88; }
+    .slide-dot[data-layer="s"]        { background: rgba(96,165,250,.35); }
+    .slide-dot[data-layer="s"].active { background: #60A5FA; }
+    .slide-dot[data-layer="m"]        { background: rgba(74,222,128,.3); }
+    .slide-dot[data-layer="m"].active { background: #4ADE80; }
+    .slide-count { color: rgba(255,255,255,.7); font-size: .68rem; letter-spacing: .1em; white-space: nowrap; min-width: 3.2rem; text-align: right; }
+    .slide-foot-tag {
+      font-size: .58rem; font-weight: 800; letter-spacing: .14em;
+      padding: .18rem .5rem; border-radius: 1rem; white-space: nowrap;
+    }
+    .sft-v { background: rgba(232,136,136,.2); color: #E88;    border: 1px solid rgba(232,136,136,.3); }
+    .sft-s { background: rgba(96,165,250,.12); color: #60A5FA; border: 1px solid rgba(96,165,250,.25); }
+    .sft-m { background: rgba(74,222,128,.1);  color: #4ADE80; border: 1px solid rgba(74,222,128,.2); }
+    .sft-f { background: rgba(255,255,255,.06); color: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.12); }
+
+    /* ── ズームコントロール ── */
+    .zoom-ctrl { display: flex; align-items: center; gap: .3rem; }
+    .zoom-btn {
+      background: none; border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.55); cursor: pointer;
+      padding: .18rem .45rem; border-radius: .3rem; font-size: .72rem; font-weight: 700;
+      transition: all .15s; line-height: 1.2;
+    }
+    .zoom-btn:hover { color: #fff; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.35); }
+    .zoom-val { font-size: .62rem; color: rgba(255,255,255,.35); min-width: 2.4rem; text-align: center; }
+
+    /* ── 高さ圧縮（≤820px：ノートPC対応） ── */
+    @media (max-height: 820px) {
+      section > .inner, section > .inner-wide { padding-top: 0.5rem; }
+      .layer-badge   { margin-bottom: 0.4rem; }
+      .sec-title     { font-size: clamp(1.2rem,2.4vw,1.7rem); margin-bottom: 0.5rem; }
+      .sec-lead      { font-size: .92rem; line-height: 1.8; margin-bottom: 0.8rem; }
+      .divider-v, .divider-s, .divider-m { margin-bottom: 0.8rem; }
+      .pillar-grid   { gap: 0.8rem; margin-top: 0.8rem; }
+      .pillar-card   { padding: 1rem 1.1rem; }
+      .dept-grid     { gap: 0.8rem; margin-top: 0.8rem; }
+      .dept-card     { padding: 1rem 1.1rem; }
+      .dept-mission  { font-size: .8rem; line-height: 1.7; }
+      .why-grid      { gap: 0.7rem; margin-top: 0.7rem; }
+      .why-card      { padding: 0.8rem 0.9rem; }
+      .why-card p    { font-size: .78rem; }
+      .engine-card   { padding: 1rem 1.2rem; }
+      .engine-list li { font-size: .82rem; padding: .2rem 0; }
+      .quote-src     { margin-bottom: 1.2rem; }
+      blockquote     { line-height: 1.9; margin-bottom: 1rem; }
+      .quote-pills   { margin-top: 1.2rem; }
+    }
+
+    /* ── モバイル（≤480px）上書き ── ※ 必ずすべてのCSSの最後に置く */
+    @media(max-width:480px) {
+      /* NAV：ロゴを隠してナビリンクを均等配置 */
+      .nav-logo { display: none; }
+      nav { padding: 0; }
+      nav .nav-layers { flex: 1; justify-content: space-around; }
+      .nav-layer { font-size: .58rem; letter-spacing: .02em; padding: 0 .15rem; min-width: 0; }
+      /* BOTTOM NAV：ドット非表示・カウンター中央寄せ */
+      .slide-dots { display: none !important; }
+      .slide-count { flex: 1; text-align: center; font-size: .78rem; }
+      .slide-foot { gap: .3rem; padding: 0 .5rem; }
+      .slide-btn { font-size: .72rem; padding: .25rem .5rem; white-space: nowrap; }
+      .slide-foot-tag { font-size: .58rem; padding: .15rem .4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <span class="nav-logo">NAKAO KOGYO</span>
+  <div class="nav-layers">
+    <a href="#vision-quote"    class="nav-layer v"><span class="en">VISION</span>ビジョン</a>
+    <a href="#strategy-pillars" class="nav-layer s"><span class="en">STRATEGY</span>戦略</a>
+    <a href="#mission-dept"    class="nav-layer m"><span class="en">MISSION</span>ミッション</a>
+    <a href="#future"          class="nav-layer" style="border-top:3px solid rgba(255,255,255,.2)"><span class="en">FUTURE</span>向かう姿</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-layer-bar">
+    <span class="hlb hlb-v">VISION ビジョン</span>
+    <span style="color:rgba(255,255,255,.3)">→</span>
+    <span class="hlb hlb-s">STRATEGY 戦略</span>
+    <span style="color:rgba(255,255,255,.3)">→</span>
+    <span class="hlb hlb-m">MISSION ミッション</span>
+  </div>
+  <p class="hero-sub">Nakao Kogyo — Company Vision 2026</p>
+  <h1 class="hero-catch">
+    社会に<em>貢献すること</em>が、<br>私たちの第一の目的です。
+  </h1>
+  <p class="hero-desc">
+    売上や利益は、その結果としてついてくるもの。<br>
+    お客様に本当に喜んでもらい続けること——<br>
+    それがナカオ工業の存在する理由です。
+  </p>
+  <p class="scroll-hint">↓ scroll</p>
+</section>
+
+<!-- ══════════════════════════════════
+     VISION LAYER
+══════════════════════════════════ -->
+
+<!-- ── Vision: Quote ── -->
+<section id="vision-quote" style="background:var(--navy); padding:5rem 2rem;">
+  <div class="slide-label"><span class="sl-num">2 / 16</span> <span style="color:#E88">VISION</span> ／ 社長の言葉</div>
+  <div class="quote-inner">
+    <p class="quote-src">社長の言葉 ／ 2026年5月26日 経営会議</p>
+    <blockquote>
+      会社の方向づけとは、世の中のどこに貢献するかだ。<br>
+      売上確保・利益確保は、その結果としてついてくるもの。<br>
+      誰でも言えるのは「売上を上げろ」だ。<br>
+      本当の経営者は、社会への貢献を先に問う。
+    </blockquote>
+    <p class="quote-attr">中尾社長</p>
+    <div class="quote-pills">
+      <span class="pill">社会貢献が第一</span>
+      <span class="pill">松下幸之助の水の理論</span>
+      <span class="pill">お客様第一主義</span>
+      <span class="pill">社員の誇りと幸せ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Layer Map Diagram ── -->
+<section id="layer-map">
+  <div class="slide-label"><span class="sl-num">3 / 16</span> <span style="color:#E88">VISION</span> ／ ビジョン・戦略・ミッション の3層構造</div>
+  <div class="inner">
+    <h2 class="sec-title" style="text-align:center">ビジョン・戦略・ミッション の3層構造</h2>
+    <p class="sec-lead" style="text-align:center">
+      社長が語ったこの構造が、ナカオ工業の経営の骨格です。<br>
+      このドキュメント全体も、この3層で構成されています。
+    </p>
+
+    <div class="layer-diagram">
+      <div class="ld-row">
+        <div class="ld-tag v">VISION</div>
+        <div class="ld-body v">
+          <div class="ld-title">ビジョン ― 将来、どうあるべきか</div>
+          <div class="ld-sub">社会への貢献の形を定義します。<br>なぜ存在するのか。誰のために、何を解決するのか。</div>
+        </div>
+      </div>
+      <div class="ld-arrow">↓</div>
+      <div class="ld-row">
+        <div class="ld-tag s">STRATEGY</div>
+        <div class="ld-body s">
+          <div class="ld-title">戦略 ― 人・もの・金・時間をどう配分するか</div>
+          <div class="ld-sub">ビジョンを実現するための優先順位と資源配分。<br>どの市場に、どんな製品で、どのタイミングで動くか。</div>
+        </div>
+      </div>
+      <div class="ld-arrow">↓</div>
+      <div class="ld-row">
+        <div class="ld-tag m">MISSION</div>
+        <div class="ld-body m">
+          <div class="ld-title">ミッション ― 各人・各部門の具体的な使命</div>
+          <div class="ld-sub">戦略を実行するための各人の役割と日々の仕事。<br>ビジョンと繋がった「なぜこれをやるのか」を持ちます。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Vision: Why ── -->
+<section id="vision-why">
+  <div class="slide-label"><span class="sl-num">4 / 16</span> <span style="color:#E88">VISION</span> ／ なぜここにいるのか</div>
+  <div class="inner">
+    <span class="layer-badge badge-v">VISION ／ ビジョン</span>
+    <h2 class="sec-title">私たちは、なぜここにいるのか</h2>
+    <div class="divider-v"></div>
+    <p class="sec-lead">
+      トラックの荷押し・荷卸し。毎日何十回と繰り返される重労働。<br>
+      運転手の腰は限界に近い。時間も、体も奪われていきます。<br>
+      ナカオ工業は、そこに挑み続けてきました。
+    </p>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>私たちが解く問題</h3>
+        <p>トラック輸送業界の荷押し・荷卸し作業にかかる時間と身体的負担。「オートフロア」で根本的に解決し、運転手が誇りを持って働ける環境をつくります。</p>
+      </div>
+      <div class="why-card accent">
+        <h3>「買ってよかった」がすべての証明</h3>
+        <p>お客様の喜ぶ声こそが、私たちの存在意義の証明です。売上・利益はその結果として後からついてきます——これが本来の順番です。</p>
+      </div>
+      <div class="why-card">
+        <h3>社員が誇りを持てる仕事</h3>
+        <p>給料のためだけに働くのではなく、世の中に貢献している実感を持って毎日会社に来られる。朝起きたら「早く行きたい」と思える職場をつくります。</p>
+      </div>
+      <div class="why-card accent">
+        <h3>50年後も選ばれる会社へ</h3>
+        <p>社会に貢献し続ける会社だけが、半世紀後も必要とされます。利益を増やすことが目的の会社は、時代の変化に飲み込まれます。これが私たちの羅針盤です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     STRATEGY LAYER
+══════════════════════════════════ -->
+
+<!-- ── Strategy: 3本柱と成長ループ（slide5+6統合） ── -->
+<section id="strategy-pillars">
+  <div class="slide-label"><span class="sl-num">5 / 16</span> <span style="color:#60A5FA">STRATEGY</span> ／ 3本柱と成長ループ</div>
+  <div class="inner-wide">
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
+    <h2 class="sec-title">3本柱：互いを駆動する成長ループ</h2>
+    <div class="divider-s"></div>
+    <p class="sec-lead">
+      「社会貢献を第一に、50年持続する会社」を実現するための3本柱。<br>
+      <strong>独立しているのではなく、互いを駆動するループ</strong>として機能します。どれが欠けても、会社は長くは続きません。
+    </p>
+
+    <!-- 3 pillars + 矢印 (順番: DX → 市場拡大 → 品質深化、次ページの3フェーズと一致) -->
+    <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:.55rem; align-items:stretch; margin-bottom:.75rem;">
+
+      <!-- ① DXの柱（土台） -->
+      <div style="background:linear-gradient(135deg,#F0F6FF 0%,#E0EBFF 100%); border:2px solid var(--blue); border-top:6px solid #2563EB; border-radius:.7rem; padding:1rem 1.1rem; display:flex; flex-direction:column; box-shadow:0 3px 12px rgba(37,99,235,.15);">
+        <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.65rem;">
+          <div style="font-size:1.9rem; line-height:1;">💡</div>
+          <div>
+            <div style="font-size:.7rem; color:#2563EB; font-weight:800; letter-spacing:.18em; margin-bottom:.1rem;">DXの柱（土台）</div>
+            <div style="font-size:1.05rem; font-weight:900; color:#1E3A8A; line-height:1.3;">DXによる組織変革</div>
+          </div>
+        </div>
+        <div style="font-size:.78rem; color:var(--mute); line-height:1.8; margin-bottom:.55rem; padding-bottom:.5rem; border-bottom:1px dashed #bfd5ff;">情報を見える形にし、<strong>判断を速くする基盤</strong>を作る。</div>
+        <ul style="font-size:.78rem; color:var(--text); line-height:1.9; padding-left:1.15rem; margin:0;">
+          <li><strong style="color:#2563EB;">CRM</strong>：997社・営業可視化<br><span style="color:#2563EB; font-weight:700; font-size:.72rem;">🔵 プロトタイプ稼働中</span></li>
+          <li><strong style="color:#2563EB;">工程管理</strong>：製造・営業<br><span style="color:#16A34A; font-weight:700; font-size:.72rem;">✅ 本番稼働中</span></li>
+          <li><strong style="color:#2563EB;">BOM</strong>：設計・製造・調達の部品表<br><span style="color:#2563EB; font-weight:700; font-size:.72rem;">🔵 構築中</span></li>
+        </ul>
+      </div>
+
+      <!-- Arrow 1: DX→市場拡大 -->
+      <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.4rem;">
+        <div style="background:#C0392B; color:#fff; font-size:1.4rem; font-weight:900; padding:.28rem .65rem; border-radius:.42rem; line-height:1; box-shadow:0 3px 8px rgba(192,57,43,.45);">→</div>
+        <div style="font-size:.66rem; color:#C0392B; font-weight:700; text-align:center; line-height:1.5;">情報基盤を活用、<br>顧客接点へ</div>
+      </div>
+
+      <!-- ② 市場拡大の柱 -->
+      <div style="background:linear-gradient(135deg,#fff 0%,#fff5f5 100%); border:2px solid #E88; border-top:6px solid #C0392B; border-radius:.7rem; padding:1rem 1.1rem; display:flex; flex-direction:column; box-shadow:0 3px 12px rgba(192,57,43,.12);">
+        <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.65rem;">
+          <div style="font-size:1.9rem; line-height:1;">🌏</div>
+          <div>
+            <div style="font-size:.7rem; color:#C0392B; font-weight:800; letter-spacing:.18em; margin-bottom:.1rem;">市場拡大の柱</div>
+            <div style="font-size:1.05rem; font-weight:900; color:#7B2D24; line-height:1.3;">オートフロア事業の発展</div>
+          </div>
+        </div>
+        <div style="font-size:.78rem; color:var(--mute); line-height:1.8; margin-bottom:.55rem; padding-bottom:.5rem; border-bottom:1px dashed #f5cfc9;">貢献できる<strong>顧客の数</strong>を増やす。国内異業種・海外へ。</div>
+        <ul style="font-size:.78rem; color:var(--text); line-height:1.9; padding-left:1.15rem; margin:0;">
+          <li><strong style="color:#C0392B;">モリタエコノス</strong>（廃棄物処理業界）<br><span style="color:#16A34A; font-weight:700; font-size:.72rem;">✅ 特許出願完了 2026/5</span></li>
+          <li><strong style="color:#C0392B;">タイ・セブンイレブン</strong><br><span style="color:#92400E; font-weight:700; font-size:.72rem;">🌏 海外PoC進行中</span></li>
+          <li>マーケティング開発部 新設（2026/6/21〜）</li>
+        </ul>
+      </div>
+
+      <!-- Arrow 2: 市場拡大→品質深化 -->
+      <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.4rem;">
+        <div style="background:#27AE60; color:#fff; font-size:1.4rem; font-weight:900; padding:.28rem .65rem; border-radius:.42rem; line-height:1; box-shadow:0 3px 8px rgba(39,174,96,.45);">→</div>
+        <div style="font-size:.66rem; color:#27AE60; font-weight:700; text-align:center; line-height:1.5;">顧客の声を<br>製品設計へ</div>
+      </div>
+
+      <!-- ③ 品質深化の柱 -->
+      <div style="background:linear-gradient(135deg,#fff 0%,#f1faf2 100%); border:2px solid #4CAF50; border-top:6px solid #27AE60; border-radius:.7rem; padding:1rem 1.1rem; display:flex; flex-direction:column; box-shadow:0 3px 12px rgba(39,174,96,.12);">
+        <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.65rem;">
+          <div style="font-size:1.9rem; line-height:1;">🔧</div>
+          <div>
+            <div style="font-size:.7rem; color:#27AE60; font-weight:800; letter-spacing:.18em; margin-bottom:.1rem;">品質深化の柱</div>
+            <div style="font-size:1.05rem; font-weight:900; color:#14532D; line-height:1.3;">新規製品・新規技術の開発</div>
+          </div>
+        </div>
+        <div style="font-size:.78rem; color:var(--mute); line-height:1.8; margin-bottom:.55rem; padding-bottom:.5rem; border-bottom:1px dashed #c8e6ca;">貢献できる<strong>課題の幅</strong>を、製品で広げる。</div>
+        <ul style="font-size:.78rem; color:var(--text); line-height:1.9; padding-left:1.15rem; margin:0;">
+          <li><strong style="color:#27AE60;">カーボンブラシ摩耗検知</strong><br><span style="color:#92400E; font-weight:700; font-size:.72rem;">🟡 試作設計中</span></li>
+          <li><strong style="color:#27AE60;">リチウムイオンバッテリー搭載</strong><br><span style="color:#6B7280; font-weight:700; font-size:.72rem;">📦 海外展開の前提</span></li>
+          <li>アフターサービス情報 → 設計変更フィードバック</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ループの戻り（品質深化→DXへ蓄積） -->
+    <div style="background:linear-gradient(90deg,#FEF9C3 0%,#FEF3C7 100%); border:1.5px solid #EAB308; border-radius:.55rem; padding:.7rem 1rem; display:flex; align-items:center; gap:.75rem;">
+      <div style="background:#92400E; color:#fff; font-size:.78rem; font-weight:900; padding:.25rem .7rem; border-radius:.32rem; white-space:nowrap; box-shadow:0 2px 5px rgba(146,64,14,.3);">↩ ループの戻り</div>
+      <div style="font-size:.78rem; color:#78350F; line-height:1.7;">
+        <strong style="color:#27AE60;">品質深化</strong> で得た現場知見が <strong style="color:#2563EB;">DX</strong> 基盤に蓄積され、それが <strong style="color:#C0392B;">市場拡大</strong> をさらに加速する——この循環が止まらない限り、会社は成長し続けます。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Strategy: 2フェーズ構造 ── -->
+<section id="strategy-phases">
+  <div class="slide-label"><span class="sl-num">6 / 16</span> <span style="color:#60A5FA">STRATEGY</span> ／ 並走と段階拡大</div>
+  <div class="inner">
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
+    <h2 class="sec-title" style="font-size:clamp(1.2rem,2.5vw,1.7rem);">DXと市場拡大の<strong style="color:#60A5FA;">並走</strong> ▶ 資金調達 ▶ 製品改良の本格化</h2>
+    <div class="divider-s"></div>
+    <p class="sec-lead" style="margin-bottom:1.2rem;"><strong>DX基盤の整備</strong>と<strong>市場拡大・資金調達</strong>は同時並行で推進。資金調達が達成された後、その原動力で<strong>製品改良</strong>を本格化させます。</p>
+
+    <div style="background:var(--navy); border-radius:.75rem; padding:1.6rem 1.8rem;">
+      <div style="color:rgba(255,255,255,.4); font-size:.65rem; letter-spacing:.2em; margin-bottom:1rem; text-align:center;">NOW ― 2軸を並走</div>
+
+      <!-- 並走: DX × 市場拡大 -->
+      <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:.7rem; align-items:stretch; margin-bottom:.8rem;">
+
+        <!-- 左: DX基盤 -->
+        <div style="background:rgba(96,165,250,.12); border:1px solid rgba(96,165,250,.35); border-radius:.6rem; padding:1rem 1.2rem;">
+          <div style="color:#60A5FA; font-size:.68rem; font-weight:800; letter-spacing:.15em; margin-bottom:.5rem;">💡 DXの柱 ― 継続中（土台）</div>
+          <div style="color:var(--white); font-size:.88rem; font-weight:800; margin-bottom:.7rem;">DX基盤の整備：情報を見える形にする</div>
+          <div style="display:flex; flex-direction:column; gap:.45rem;">
+            <div style="background:rgba(255,255,255,.06); border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:#60A5FA; font-size:.7rem; font-weight:800; margin-bottom:.15rem;">CRM <span style="color:rgba(255,255,255,.55); font-weight:600; font-size:.66rem;">／ 997社・営業可視化</span></div>
+              <div style="color:rgba(255,255,255,.55); font-size:.7rem;">🔵 プロトタイプ稼働中</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06); border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:#4ADE80; font-size:.7rem; font-weight:800; margin-bottom:.15rem;">工程管理 <span style="color:rgba(255,255,255,.55); font-weight:600; font-size:.66rem;">／ 製造・営業</span></div>
+              <div style="color:rgba(255,255,255,.55); font-size:.7rem;">✅ 本番稼働中</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06); border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:#60A5FA; font-size:.7rem; font-weight:800; margin-bottom:.15rem;">BOM <span style="color:rgba(255,255,255,.55); font-weight:600; font-size:.66rem;">／ 設計・製造・調達の部品表</span></div>
+              <div style="color:rgba(255,255,255,.55); font-size:.7rem;">🔵 構築中</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 中央: 並走インジケータ -->
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem;">
+          <div style="background:#60A5FA; color:var(--navy); font-size:1rem; font-weight:900; padding:.3rem .55rem; border-radius:.4rem; line-height:1; box-shadow:0 2px 6px rgba(96,165,250,.5);">⇔</div>
+          <div style="color:rgba(255,255,255,.6); font-size:.66rem; font-weight:700; text-align:center; line-height:1.5; letter-spacing:.05em;">並走<br>（独立駆動）</div>
+        </div>
+
+        <!-- 右: 市場拡大・資金調達 -->
+        <div style="background:rgba(232,136,136,.12); border:1px solid rgba(232,136,136,.3); border-radius:.6rem; padding:1rem 1.2rem;">
+          <div style="color:#E88; font-size:.68rem; font-weight:800; letter-spacing:.15em; margin-bottom:.5rem;">🌏 市場拡大の柱 ― 進行中</div>
+          <div style="color:var(--white); font-size:.88rem; font-weight:800; margin-bottom:.55rem;">市場拡大・資金調達</div>
+          <div style="color:rgba(255,255,255,.6); font-size:.72rem; line-height:1.7; margin-bottom:.6rem;"><strong style="color:rgba(255,255,255,.85)">岸田常務 ＋ 中尾</strong> が「マーケティング開発部」として機能。</div>
+          <div style="display:flex; flex-direction:column; gap:.45rem;">
+            <div style="background:rgba(255,255,255,.08); border-left:3px solid #E88; border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:#E88; font-size:.7rem; font-weight:800; margin-bottom:.15rem;">モリタエコノス <span style="color:rgba(255,255,255,.55); font-weight:600; font-size:.66rem;">／ 大口・独自に推進</span></div>
+              <div style="color:rgba(255,255,255,.55); font-size:.7rem;">✅ 特許出願完了 2026/5</div>
+            </div>
+            <div style="background:rgba(255,255,255,.08); border-left:3px solid #E88; border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:#E88; font-size:.7rem; font-weight:800; margin-bottom:.15rem;">タイ・セブンイレブン <span style="color:rgba(255,255,255,.55); font-weight:600; font-size:.66rem;">／ 大口・独自に推進</span></div>
+              <div style="color:rgba(255,255,255,.55); font-size:.7rem;">🌏 海外PoC進行中</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06); border-radius:.4rem; padding:.55rem .75rem;">
+              <div style="color:rgba(255,255,255,.7); font-size:.7rem; font-weight:700;">ニーズ調査・新業界開拓・資金調達を並行推進</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ゲート: 資金調達達成 -->
+      <div style="display:flex; align-items:center; gap:.7rem; justify-content:center; margin:.85rem 0 .8rem;">
+        <div style="flex:1; height:1px; background:rgba(255,255,255,.15);"></div>
+        <div style="background:#FBBF24; color:#451A03; font-size:.74rem; font-weight:900; padding:.3rem .85rem; border-radius:.4rem; letter-spacing:.08em; box-shadow:0 2px 8px rgba(251,191,36,.35);">▼ 資金調達達成（ゲート） ▼</div>
+        <div style="flex:1; height:1px; background:rgba(255,255,255,.15);"></div>
+      </div>
+      <div style="color:rgba(255,255,255,.5); font-size:.7rem; text-align:center; margin-bottom:.7rem; line-height:1.6;">資金調達ができないと開発チームは強化できない。<br>このゲートを通過したとき、製品改良が本格化します。</div>
+
+      <!-- NEXT: 製品改良本格化 -->
+      <div style="background:rgba(74,222,128,.07); border:1px solid rgba(74,222,128,.22); border-radius:.6rem; padding:1.1rem 1.4rem;">
+        <div style="color:#4ADE80; font-size:.68rem; font-weight:800; letter-spacing:.15em; margin-bottom:.5rem;">🔧 NEXT ― 資金調達後</div>
+        <div style="color:var(--white); font-size:.9rem; font-weight:800; margin-bottom:.7rem;">品質深化：製品改良活動の本格化・体制強化</div>
+        <div style="display:flex; gap:.8rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:130px; background:rgba(255,255,255,.06); border-radius:.4rem; padding:.7rem .8rem;">
+            <div style="color:#E88; font-size:.72rem; font-weight:800; margin-bottom:.3rem;">マーケティング開発部</div>
+            <div style="color:rgba(255,255,255,.55); font-size:.72rem; line-height:1.7;">人員強化<br>組織として正式稼働</div>
+          </div>
+          <div style="flex:1; min-width:130px; background:rgba(255,255,255,.06); border-radius:.4rem; padding:.7rem .8rem;">
+            <div style="color:#4ADE80; font-size:.72rem; font-weight:800; margin-bottom:.3rem;">設計部</div>
+            <div style="color:rgba(255,255,255,.55); font-size:.72rem; line-height:1.7;">人員強化<br>開発ソフト導入</div>
+          </div>
+          <div style="flex:1; min-width:130px; background:rgba(255,255,255,.06); border-radius:.4rem; padding:.7rem .8rem;">
+            <div style="color:#60A5FA; font-size:.72rem; font-weight:800; margin-bottom:.3rem;">マーケ → 設計 連携</div>
+            <div style="color:rgba(255,255,255,.55); font-size:.72rem; line-height:1.7;">新規設計・設計変更の<br>促進体制を確立</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Strategy: なぜDXか ── -->
+<section id="strategy-dx-why" style="background:#F8FAFC;">
+  <div class="slide-label" style="background:rgba(248,250,252,.95);"><span class="sl-num">7 / 16</span> <span style="color:#60A5FA">STRATEGY</span> ／ なぜ今、DXなのか</div>
+  <div class="inner">
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
+    <h2 class="sec-title">なぜ今、DXなのか</h2>
+    <div class="divider-s"></div>
+    <p class="sec-lead">
+      「DXで組織を変える」とは、流行に乗ることではありません。<br>
+      製造業として50年後も競争力を持ち続けるために、<br>
+      <strong>避けられない課題</strong>があります。
+    </p>
+
+    <div style="background:var(--navy); border-radius:.75rem; padding:1.1rem 2rem; margin-bottom:1rem; text-align:center;">
+      <div style="color:rgba(255,255,255,.4); font-size:.68rem; letter-spacing:.22em; margin-bottom:.9rem;">製造業DX の本質</div>
+      <div style="color:var(--white); font-size:clamp(1.1rem,2.5vw,1.45rem); font-weight:900; line-height:1.55;">
+        「ものづくりは、<span style="color:#E88;">情報産業</span>だ」
+      </div>
+      <div style="color:rgba(255,255,255,.55); font-size:.84rem; margin-top:.9rem; line-height:1.85;">
+        製品の競争力は「良い部品を選んだか」ではなく、<br>
+        設計・製造・サービスにわたる<strong style="color:rgba(255,255,255,.85)">「情報をどう管理するか」</strong>で決まる。
+      </div>
+    </div>
+
+    <h3 style="font-size:.92rem; font-weight:800; color:var(--navy); margin-bottom:1rem; letter-spacing:.03em;">▌ ナカオ工業の現在地：情報の断絶</h3>
+    <div class="why-grid" style="margin-bottom:1rem;">
+      <div class="why-card" style="border-left-color:#EF4444;">
+        <h3>📋 設計・仕様情報</h3>
+        <p>製品仕様（BOM）は個人の経験と頭の中にあります。ベテランが変われば、なぜその構造なのかを誰も説明できません。</p>
+      </div>
+      <div class="why-card" style="border-left-color:#EF4444;">
+        <h3>🏭 製造工程情報</h3>
+        <p>製造手順（BOP）は手書きとExcelで管理され、改善の積み重ねがデータとして残りません。「誰が作っても同じ品質」を実現できません。</p>
+      </div>
+      <div class="why-card" style="border-left-color:#EF4444;">
+        <h3>👥 顧客・市場情報</h3>
+        <p>複数システムで分断され、連携ゼロ。誰がいつ何を買ったかを横断的に把握できず、営業が属人化しています。</p>
+      </div>
+      <div class="why-card" style="border-left-color:#EF4444;">
+        <h3>🔧 サービス・改善情報</h3>
+        <p>現場の不具合・改善知見は口頭で共有され、次の製品設計に活かされる仕組みがありません。同じ問題が繰り返されます。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Strategy: 情報ループ ── -->
+<section id="strategy-dx-loop" style="background:#F8FAFC;">
+  <div class="slide-label" style="background:rgba(248,250,252,.95);"><span class="sl-num">8 / 16</span> <span style="color:#60A5FA">STRATEGY</span> ／ 情報ループと構築ロードマップ</div>
+  <div class="inner">
+    <h3 style="font-size:.92rem; font-weight:800; color:var(--navy); margin-bottom:1rem; letter-spacing:.03em;">▌ ナカオ工業が目指す情報ループ：正直な現在地と目標</h3>
+
+    <!-- ループ図 -->
+    <div style="background:var(--white); border:1.5px solid var(--line); border-radius:.75rem; padding:1rem 1.2rem; margin-bottom:0.8rem; overflow-x:auto;">
+
+      <!-- ステップ1: 市場・アフターサービス -->
+      <div style="display:flex; gap:.7rem; flex-wrap:wrap; margin-bottom:.6rem;">
+        <div style="flex:1; min-width:180px; background:#EFF6FF; border:1.5px solid #60A5FA; border-radius:.6rem; padding:.7rem .9rem;">
+          <div style="font-size:.7rem; color:var(--blue); font-weight:700; letter-spacing:.1em; margin-bottom:.2rem;">INPUT ① 市場のニーズ</div>
+          <div style="font-size:.88rem; font-weight:800; color:var(--navy); margin-bottom:.2rem;">マーケティング・ニーズ調査</div>
+          <div style="font-size:.76rem; color:var(--mute);">小嵜主任 / 新設マーケティング開発部（岸田常務・中尾）<br>「お客様が困っていること」を掘り起こす</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#60A5FA; color:#fff; font-size:1.6rem; font-weight:900; padding:.35rem .7rem; border-radius:.45rem; line-height:1; box-shadow:0 3px 8px rgba(96,165,250,.45);">＋</div>
+        </div>
+        <div style="flex:1; min-width:180px; background:#EFF6FF; border:1.5px solid #60A5FA; border-radius:.6rem; padding:.7rem .9rem;">
+          <div style="font-size:.7rem; color:var(--blue); font-weight:700; letter-spacing:.1em; margin-bottom:.2rem;">INPUT ② 現場の知見</div>
+          <div style="font-size:.88rem; font-weight:800; color:var(--navy); margin-bottom:.2rem;">アフターサービス<br>情報の集積</div>
+          <div style="font-size:.76rem; color:var(--mute);">野田課長<br>不具合・修理履歴・お客様の声</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin:.4rem 0;">
+        <div style="background:#60A5FA; color:#fff; font-size:1.7rem; font-weight:900; padding:.3rem .85rem; border-radius:.5rem; line-height:1; box-shadow:0 3px 8px rgba(96,165,250,.45);">↓</div>
+      </div>
+
+      <!-- ステップ2: 設計変更（今ない） -->
+      <div style="background:#FEF2F2; border:2px dashed #EF4444; border-radius:.6rem; padding:.7rem 1rem; margin-bottom:.6rem; position:relative;">
+        <div style="position:absolute; top:-.7rem; left:1rem; background:#EF4444; color:#fff; font-size:.65rem; font-weight:800; padding:.15rem .6rem; border-radius:1rem; letter-spacing:.08em;">⚠ 現在ここに仕組みがない</div>
+        <div style="font-size:.88rem; font-weight:800; color:#991B1B; margin-bottom:.2rem;">BOM・設計変更指示</div>
+        <div style="font-size:.78rem; color:#B91C1C; line-height:1.7;">
+          野田課長の現場知見が、設計変更に直結するルートがありません。<br>
+          市場のニーズが新製品スペックに反映される<br>プロセスが定義されていません。<br>
+          <strong>→ BOM構築と設計フロー整備が、次の最重要課題です。</strong>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin:.4rem 0;">
+        <div style="background:#EF4444; color:#fff; font-size:1.7rem; font-weight:900; padding:.3rem .85rem; border-radius:.5rem; line-height:1; box-shadow:0 3px 8px rgba(239,68,68,.45);">↓</div>
+      </div>
+
+      <!-- ステップ3-4: 製造→顧客 -->
+      <div style="display:flex; gap:.7rem; flex-wrap:wrap; margin-bottom:.6rem;">
+        <div style="flex:1; min-width:160px; background:#F0FDF4; border:1.5px solid #4ADE80; border-radius:.6rem; padding:.7rem .9rem;">
+          <div style="font-size:.7rem; color:var(--green); font-weight:700; letter-spacing:.1em; margin-bottom:.2rem;">✅ 稼働中</div>
+          <div style="font-size:.88rem; font-weight:800; color:var(--navy); margin-bottom:.2rem;">製造・工程管理</div>
+          <div style="font-size:.76rem; color:var(--mute);">山田係長<br>工程管理システムで進捗を可視化</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#16A34A; color:#fff; font-size:1.6rem; font-weight:900; padding:.3rem .7rem; border-radius:.45rem; line-height:1; box-shadow:0 3px 8px rgba(22,163,74,.45);">→</div>
+        </div>
+        <div style="flex:1; min-width:160px; background:#EFF6FF; border:1.5px solid #60A5FA; border-radius:.6rem; padding:.7rem .9rem;">
+          <div style="font-size:.7rem; color:#1D4ED8; font-weight:700; letter-spacing:.1em; margin-bottom:.2rem;">🔵 プロトタイプ稼働中</div>
+          <div style="font-size:.88rem; font-weight:800; color:var(--navy); margin-bottom:.2rem;">顧客・納入管理</div>
+          <div style="font-size:.76rem; color:var(--mute);">CRM 997社<br>誰に何をいつ届けたか</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#16A34A; color:#fff; font-size:1.6rem; font-weight:900; padding:.3rem .7rem; border-radius:.45rem; line-height:1; box-shadow:0 3px 8px rgba(22,163,74,.45);">→</div>
+        </div>
+        <div style="flex:1; min-width:160px; background:#F0FDF4; border:1.5px solid #4ADE80; border-radius:.6rem; padding:.7rem .9rem;">
+          <div style="font-size:.7rem; color:var(--green); font-weight:700; letter-spacing:.1em; margin-bottom:.2rem;">↩ ループへ戻る</div>
+          <div style="font-size:.88rem; font-weight:800; color:var(--navy); margin-bottom:.2rem;">アフターサービス</div>
+          <div style="font-size:.76rem; color:var(--mute);">野田課長<br>また INPUT ② へ蓄積される</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#F0FDF4; border-left:4px solid var(--green); border-radius:.5rem; padding:1rem 1.4rem; font-size:.87rem; color:#166534; line-height:1.95;">
+      <strong>今構築している順番の意味：</strong>
+      工程管理（BOP ✅）→ CRM（市場情報 🔵プロトタイプ）→ BOM（設計情報 🔵構築中）→ SFA（ニーズ収集 🔵プロトタイプ）<br>
+      「アフターサービス情報 → 設計変更」の回路を完成させることが、<br>このループを本当に回す鍵です。
+    </div>
+  </div>
+</section>
+
+<!-- ── Strategy: BOM Architecture ── -->
+<section id="strategy-bom-arch" style="background:#F8FAFC;">
+  <div class="slide-label" style="background:rgba(248,250,252,.95);"><span class="sl-num">9 / 16</span> <span style="color:#60A5FA">STRATEGY</span> ／ BOMを軸にした情報設計</div>
+  <div class="inner-wide">
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
+    <h2 class="sec-title">同じ部品を、業務ごとに組み直す ── それがBOM</h2>
+    <div class="divider-s"></div>
+    <p class="sec-lead">
+      製品を構成する部品は同じでも、<strong>業務ごとに必要な「組み直し方」が違う</strong>から、BOMは複数に分かれます。<br>
+      設計・調達・サービスの3つが <strong>BOM（部品の構成）</strong>、製造の1つが <strong>BOP（工程の構成）</strong>。<br>
+      <strong style="color:#B45309;">構造が異なるものを連携させた時、見えなかった価値が見える</strong>——それがBOM戦略の核です。
+    </p>
+
+    <!-- 仕事の進む方向 -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:.45rem; margin-bottom:.65rem; flex-wrap:wrap;">
+      <span style="font-size:.7rem; font-weight:800; color:#37474f; letter-spacing:.08em;">仕事の進む方向 →</span>
+      <span style="background:#DBEAFE; color:#1D4ED8; font-size:.68rem; font-weight:800; padding:.15rem .5rem; border-radius:.3rem;">企画・設計</span>
+      <span style="color:#37474f; font-weight:900;">▶</span>
+      <span style="background:#FEF3C7; color:#B45309; font-size:.68rem; font-weight:800; padding:.15rem .5rem; border-radius:.3rem;">調達・生準</span>
+      <span style="color:#37474f; font-weight:900;">▶</span>
+      <span style="background:#DCFCE7; color:#16A34A; font-size:.68rem; font-weight:800; padding:.15rem .5rem; border-radius:.3rem;">生技・製造</span>
+      <span style="color:#37474f; font-weight:900;">▶</span>
+      <span style="background:#FEE2E2; color:#DC2626; font-size:.68rem; font-weight:800; padding:.15rem .5rem; border-radius:.3rem;">保守・メンテ</span>
+    </div>
+
+    <!-- 4視点カード -->
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:.55rem; margin-bottom:.7rem;">
+
+      <!-- E-BOM -->
+      <div style="background:#fff; border:2px solid #60A5FA; border-top:5px solid #2563EB; border-radius:.7rem; padding:.85rem .9rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.62rem; font-weight:800; letter-spacing:.18em; color:#2563EB;">E-BOM <span style="color:var(--mute); font-weight:600; letter-spacing:0;">／ BOM</span></div>
+          <div style="font-size:.55rem; font-weight:700; color:#1D4ED8; background:#DBEAFE; padding:.15rem .4rem; border-radius:.3rem;">🔵 構築中</div>
+        </div>
+        <div style="font-size:1.05rem; font-weight:900; color:#1D4ED8; margin-bottom:.3rem;">機能で見る</div>
+        <div style="font-size:.68rem; color:var(--navy); font-weight:800; margin-bottom:.3rem;">企画・設計</div>
+        <div style="font-size:.66rem; color:var(--mute); line-height:1.75; padding-top:.35rem; border-top:1px dashed #c7d9f5;"><strong>機能を満たすための構成</strong><br>図面データ・技術情報</div>
+      </div>
+
+      <!-- M-BOM -->
+      <div style="background:#fff; border:2px solid #F59E0B; border-top:5px solid #B45309; border-radius:.7rem; padding:.85rem .9rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.62rem; font-weight:800; letter-spacing:.18em; color:#B45309;">M-BOM <span style="color:var(--mute); font-weight:600; letter-spacing:0;">／ BOM</span></div>
+          <div style="font-size:.55rem; font-weight:700; color:#92400E; background:#FEF3C7; padding:.15rem .4rem; border-radius:.3rem;">🟡 整備中</div>
+        </div>
+        <div style="font-size:1.05rem; font-weight:900; color:#B45309; margin-bottom:.3rem;">買い方で見る</div>
+        <div style="font-size:.68rem; color:var(--navy); font-weight:800; margin-bottom:.3rem;">調達・生準</div>
+        <div style="font-size:.66rem; color:var(--mute); line-height:1.75; padding-top:.35rem; border-top:1px dashed #f5dfb0;"><strong>仕入れ単位を表す構成</strong><br>目標原価・仕入先・調達ルート</div>
+      </div>
+
+      <!-- BOP -->
+      <div style="background:#fff; border:2px solid #4ADE80; border-top:5px solid #16A34A; border-radius:.7rem; padding:.85rem .9rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.62rem; font-weight:800; letter-spacing:.18em; color:#16A34A;">BOP <span style="color:var(--mute); font-weight:600; letter-spacing:0;">／ 工程表</span></div>
+          <div style="font-size:.55rem; font-weight:700; color:#166534; background:#DCFCE7; padding:.15rem .4rem; border-radius:.3rem;">✅ 稼働中</div>
+        </div>
+        <div style="font-size:1.05rem; font-weight:900; color:#16A34A; margin-bottom:.3rem;">工程で見る</div>
+        <div style="font-size:.68rem; color:var(--navy); font-weight:800; margin-bottom:.3rem;">生技・製造</div>
+        <div style="font-size:.66rem; color:var(--mute); line-height:1.75; padding-top:.35rem; border-top:1px dashed #b9e9c4;"><strong>工程表（部品ではなく手順）</strong><br>どの手順・工程で製造するか</div>
+      </div>
+
+      <!-- S-BOM -->
+      <div style="background:#fff; border:2px solid #EF4444; border-top:5px solid #DC2626; border-radius:.7rem; padding:.85rem .9rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.62rem; font-weight:800; letter-spacing:.18em; color:#DC2626;">S-BOM <span style="color:var(--mute); font-weight:600; letter-spacing:0;">／ BOM</span></div>
+          <div style="font-size:.55rem; font-weight:700; color:#991B1B; background:#FEE2E2; padding:.15rem .4rem; border-radius:.3rem;">✅ Excel運用中</div>
+        </div>
+        <div style="font-size:1.05rem; font-weight:900; color:#DC2626; margin-bottom:.3rem;">直し方で見る</div>
+        <div style="font-size:.68rem; color:var(--navy); font-weight:800; margin-bottom:.3rem;">保守・メンテ</div>
+        <div style="font-size:.66rem; color:var(--mute); line-height:1.75; padding-top:.35rem; border-top:1px dashed #f5c4c4;"><strong>修理するための構成</strong><br>補修対象の確認と作業手順</div>
+      </div>
+    </div>
+
+    <!-- Foundation: 品目マスター -->
+    <div style="text-align:center; color:var(--mute); font-size:.66rem; margin:.2rem 0 .3rem;">↑ どのBOMも、同じ「品目マスター」を業務ごとに組み直したもの</div>
+    <div style="background:var(--navy); border-radius:.6rem; padding:.7rem 1.2rem; margin-bottom:.85rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+      <div style="color:#60A5FA; font-size:.6rem; font-weight:800; letter-spacing:.2em; white-space:nowrap;">品目マスター</div>
+      <div style="color:rgba(255,255,255,.9); font-size:.78rem; font-weight:800; white-space:nowrap;">部品１個ごとの基本情報</div>
+      <div style="color:rgba(255,255,255,.6); font-size:.7rem; line-height:1.65; flex:1; min-width:200px;">形状・寸法 ／ コスト ／ 材質 ／ サプライヤ ／ 履歴 ／ クレーム ／ 機能・性能</div>
+    </div>
+
+    <!-- 連携で生まれる価値 -->
+    <div style="background:#FEF9C3; border:1.5px solid #EAB308; border-radius:.6rem; padding:.85rem 1.1rem;">
+      <div style="font-size:.8rem; font-weight:800; color:#92400E; margin-bottom:.5rem;">⚡ BOM同士を連携させると、これまで見えなかった価値が見えるようになる</div>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:.35rem .9rem; font-size:.71rem; color:#78350F; line-height:1.75;">
+        <div><strong style="color:#92400E;">S-BOM × E-BOM</strong> → 壊れやすい部品が次の設計に反映できる</div>
+        <div><strong style="color:#92400E;">M-BOM × S-BOM</strong> → メンテ多い部品のサプライヤ見直し</div>
+        <div><strong style="color:#92400E;">BOP × S-BOM</strong> → 修理しにくい工程を製造段階で改善</div>
+        <div><strong style="color:#92400E;">E-BOM × M-BOM</strong> → 機能を維持しつつ原価を下げる判断</div>
+      </div>
+      <div style="font-size:.66rem; color:#78350F; margin-top:.5rem; padding-top:.4rem; border-top:1px dashed #EAB308;">
+        この「BOMの有機的な連携」を実現し、見える化して意思決定できる企業は <strong>日本でもごく少数</strong>。だからこそ、ここに踏み込む価値があります。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MISSION LAYER
+══════════════════════════════════ -->
+
+<!-- ── Mission: Departments ── -->
+<section id="mission-dept">
+  <div class="slide-label"><span class="sl-num">10 / 16</span> <span style="color:#4ADE80">MISSION</span> ／ 各部門のミッション</div>
+  <div class="inner">
+    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <h2 class="sec-title">各部門のミッション</h2>
+    <div class="divider-m"></div>
+    <p class="sec-lead">
+      戦略を実行するのは、各部門のリーダーと現場です。<br>
+      それぞれの仕事が、どのビジョン・戦略につながっているのかを明示します。
+    </p>
+    <div class="dept-grid">
+      <div class="dept-card">
+        <div class="dept-person">野田課長 ／ サービス部</div>
+        <div class="dept-title">品質深化の柱の<br>要（かなめ）</div>
+        <div class="dept-mission">
+          品質への信頼がなければ、市場拡大はすべて砂上の楼閣です。野田課長が守るアフターサービスの誠実さこそが、ナカオ工業が選ばれ続ける理由——その根拠を日々つくっています。不具合対策・製品改良への取り組みは止まったのではありません。市場拡大の柱と並走しながら、同じビジョンへ向かって動いてきました。そして今、品質深化の柱を本格的に回す段階に入りました。
+        </div>
+        <div class="dept-link">→ 品質深化の柱 ／ ビジョン「お客様第一」</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-person">小嵜主任・小出さん ／ 営業部</div>
+        <div class="dept-title">市場拡大の柱の<br>先頭を走る</div>
+        <div class="dept-mission">
+          小嵜主任はCRM・SFA導入の中心人物です。CRM（顧客管理）で「誰にいつ何を届けたか」を組織の資産にし、SFA（営業支援）で商談進捗・訪問履歴を可視化する——その仕組みづくりを牽引しています。小出さんは訪問数・売上ともに社内トップ。その行動力と開拓力が、まだオートフロアを知らない顧客への扉を開き続けています。仕組みと実行力が重なるとき、市場は大きく動きます。
+        </div>
+        <div class="dept-link">→ 市場拡大の柱 ／ 戦略「CRM・SFA基盤」</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-person">山田係長 ／ 製造部物流エンジニアリング課</div>
+        <div class="dept-title">経営と現場を、<br>強い糸で結ぶ</div>
+        <div class="dept-mission">
+          現場で起きていることを経営に届け、経営の意図を現場に伝える——山田係長はその橋渡し役です。工程管理システムで進捗を可視化し、「今どこにいるか」を数字で共有することで、判断を現場に根ざしたものにします。古田班長・岡田班長・岩本主任の声を拾い上げ、それを会社の力に変えること。現場の知恵が上に届く組織をつくることが、山田係長に期待する最も大切な仕事です。
+        </div>
+        <div class="dept-link">→ 品質深化の柱 ／ 戦略「DX・BOM構築」</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Mission: Manufacturing Team ── -->
+<section id="mission-manufacturing">
+  <div class="slide-label"><span class="sl-num">11 / 16</span> <span style="color:#4ADE80">MISSION</span> ／ 製造チームのミッション</div>
+  <div class="inner">
+    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <h2 class="sec-title">製造チームのミッション</h2>
+    <div class="divider-m"></div>
+    <p class="sec-lead">
+      山田係長のもと、製造現場を引っ張る3人のリーダーがいます。<br>
+      それぞれの強みを活かして、これからも一緒に現場をつくっていきたいです。
+    </p>
+    <div class="dept-grid">
+      <div class="dept-card">
+        <div class="dept-person">古田班長 ／ 製造・溶接・治具設計</div>
+        <div class="dept-title">自動化の先駆者。<br>確かな技術を形にする</div>
+        <div class="dept-mission">
+          産業ロボットによる溶接自動化を、誰よりも早く現場で実現してくれました。5Sでも先頭に立ち続け、「丁寧に・確実に」という姿勢は本当に頼りになります。これからは治具設計・調達の専門性をさらに深めて、製造品質の土台を支えてもらいたいです。
+        </div>
+        <div class="dept-link">→ 品質深化の柱 ／ 自動化・標準化</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-person">岡田班長 ／ 製造・現場改善</div>
+        <div class="dept-title">言うべきことを言い、<br>現場を前へ動かす</div>
+        <div class="dept-mission">
+          改善活動・5S・工程管理に、いつも前向きに取り組んでくれています。自動化にも挑戦したいという意欲も嬉しいです。現場の課題をちゃんと声にできる人は貴重で、それがこの会社の力になっていきます。次の現場リーダーとして、一緒に歩んでいきたいです。
+        </div>
+        <div class="dept-link">→ 品質深化の柱 ／ 現場改善・リーダー育成</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-person">岩本主任 ／ ロボット自動化・機械加工</div>
+        <div class="dept-title">新しい技術で、<br>チームの未来を切り拓く</div>
+        <div class="dept-mission">
+          協働ロボットもAI活用も、初めてのことに対して柔軟に向き合ってくれています。機械加工チームはこれから大きな変化の時期を迎えますが、岩本主任にその中心にいてもらいたいです。ナカオのものづくりの進化を、現場から一緒につくっていきましょう。
+        </div>
+        <div class="dept-link">→ 品質深化の柱 ／ 自動化・機械加工チーム変革</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Mission: Nakao Declaration ── -->
+<section id="mission-nakao">
+  <div class="slide-label"><span class="sl-num">12 / 16</span> <span style="color:#4ADE80">MISSION</span> ／ 中尾憲吾の宣言</div>
+  <div class="inner-wide">
+    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <h2 class="sec-title">中尾憲吾の宣言</h2>
+    <div class="divider-m"></div>
+
+    <!-- Opening -->
+    <p style="font-size:1.25rem; font-weight:800; color:#166534; margin-bottom:1.4rem; line-height:1.7;">
+      このビジョンを、最初に動かすのは私です。
+    </p>
+    <p style="font-size:.97rem; line-height:2.1; color:var(--text); margin-bottom:1.6rem;">
+      設計・開発・DX・経営企画——気づけば、全部が自分に集まっていました。それはこの会社の「情報が繋がっていない」という構造問題の結果です。だからこそ、私がやるべきことが見えています。まず土台を作る。情報を繋げる。そうすれば、今集まっている仕事の多くを、仕組みが代わりに動いてくれるようになります。
+    </p>
+
+    <!-- やること -->
+    <div style="background:#F0FDF4; border-left:4px solid #4ADE80; border-radius:.6rem; padding:1.3rem 1.6rem; margin-bottom:1.6rem;">
+      <div style="font-weight:800; color:#166534; font-size:1rem; margin-bottom:1rem;">私がやること、やっていること——</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:.8rem 1.6rem;">
+        <div style="font-size:.9rem; line-height:1.8;">
+          <div style="font-weight:700; color:#166534; margin-bottom:.2rem;">📋 BOM構築</div>
+          <div style="color:var(--mute);">部品・寸法・コストの情報を一元化する。設計の判断基準をつくる。これが全部の土台。</div>
+        </div>
+        <div style="font-size:.9rem; line-height:1.8;">
+          <div style="font-weight:700; color:#166534; margin-bottom:.2rem;">💻 CRM・工程管理・SaaS</div>
+          <div style="color:var(--mute);">「今どこにいるか」を数字で共有する。誰の頭の中にもない、組織の記憶をつくる。</div>
+        </div>
+        <div style="font-size:.9rem; line-height:1.8;">
+          <div style="font-weight:700; color:#166534; margin-bottom:.2rem;">🤝 モリタとの協働開発</div>
+          <div style="color:var(--mute);">大手メーカーとの共同特許。オートフロアを次の市場へ連れていく道筋をつける。</div>
+        </div>
+        <div style="font-size:.9rem; line-height:1.8;">
+          <div style="font-weight:700; color:#166534; margin-bottom:.2rem;">🌏 海外展開</div>
+          <div style="color:var(--mute);">タイ・東南アジア。日本だけでは届かない場所にオートフロアを届ける突破口を開く。</div>
+        </div>
+        <div style="font-size:.9rem; line-height:1.8; grid-column:1/-1;">
+          <div style="font-weight:700; color:#166534; margin-bottom:.2rem;">📢 このビジョンを届ける（＝今、このスライドです）</div>
+          <div style="color:var(--mute);">一人で動き続けても、伝わらなければ変わらない。皆さんに直接、言葉にして届けることも、私の仕事です。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- お願い -->
+    <div style="background:#fff; border:1.5px solid #BBF7D0; border-radius:.6rem; padding:1.2rem 1.6rem; margin-bottom:1.6rem; font-size:.95rem; line-height:2;">
+      <div style="font-weight:800; color:#166534; margin-bottom:.6rem;">皆さんにお願いしたいこと——</div>
+      <div style="color:var(--text);">
+        「どうせ変わらない」と思わないでください。<br>
+        現場で気になっていることがあれば、教えてください。小さな声が、設計を変え、仕組みを変えます。<br>
+        変わり始めているのは、今です。
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <p style="font-size:1.05rem; font-weight:800; color:#166534; line-height:1.8;">
+      皆さんの仕事を、もっとやりやすくする。<br>それが私のミッションです。
+    </p>
+  </div>
+</section>
+
+<!-- ── Mission: SaaS Map ── -->
+<section id="mission-saas">
+  <div class="slide-label"><span class="sl-num">13 / 16</span> <span style="color:#4ADE80">MISSION</span> ／ DXによる組織変革の具体的な姿</div>
+  <div class="inner-wide">
+    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <h2 class="sec-title">DXによる組織変革の具体的な姿</h2>
+    <div class="divider-m"></div>
+    <p class="sec-lead">「DXで組織を変える」とは、具体的に何を作ることなのか。鍵は <strong>SaaS（クラウド業務システム）</strong> です。<br>個人の記憶・属人的なExcelを「組織の情報資産」へと転換する装置——それがSaaSです。</p>
+
+    <!-- SaaS定義 -->
+    <div style="background:var(--navy); border-radius:.7rem; padding:.9rem 1.4rem; margin-bottom:.9rem; display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap;">
+      <div style="color:#60A5FA; font-size:.65rem; font-weight:800; letter-spacing:.2em; white-space:nowrap;">SaaS とは</div>
+      <div style="color:var(--white); font-size:.95rem; font-weight:800; white-space:nowrap;">Software as a Service</div>
+      <div style="color:rgba(255,255,255,.75); font-size:.78rem; line-height:1.7; flex:1; min-width:220px;">
+        クラウドで動く業務システム。インストール不要、ブラウザがあればどこからでも使える。<strong style="color:#60A5FA;">データはクラウドに集約され、組織全員でリアルタイムに共有される。</strong>
+      </div>
+    </div>
+
+    <!-- なぜ組織にSaaSが必要か -->
+    <h3 style="font-size:.85rem; font-weight:800; color:var(--navy); margin-bottom:.5rem; letter-spacing:.03em;">▌ なぜ組織にSaaSが必要か ── 4つの理由</h3>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:.55rem; margin-bottom:1rem;">
+      <div style="background:#fff; border-left:4px solid #4ADE80; border-radius:.5rem; padding:.7rem .85rem;">
+        <div style="font-size:.78rem; font-weight:800; color:#16A34A; margin-bottom:.3rem;">① 属人化からの脱出</div>
+        <div style="font-size:.7rem; color:var(--mute); line-height:1.7;">「あの人しか分からない」をなくす。誰でも同じ画面で同じ情報を見られる。</div>
+      </div>
+      <div style="background:#fff; border-left:4px solid #60A5FA; border-radius:.5rem; padding:.7rem .85rem;">
+        <div style="font-size:.78rem; font-weight:800; color:#2563EB; margin-bottom:.3rem;">② データが繋がる</div>
+        <div style="font-size:.7rem; color:var(--mute); line-height:1.7;">部門間の壁を越えてデータが連携。営業の声が設計に、設計が現場に。</div>
+      </div>
+      <div style="background:#fff; border-left:4px solid #F59E0B; border-radius:.5rem; padding:.7rem .85rem;">
+        <div style="font-size:.78rem; font-weight:800; color:#B45309; margin-bottom:.3rem;">③ リアルタイム共有</div>
+        <div style="font-size:.7rem; color:var(--mute); line-height:1.7;">入力した瞬間、組織全員が最新情報を見られる。Excel往復のロスがゼロに。</div>
+      </div>
+      <div style="background:#fff; border-left:4px solid #EF4444; border-radius:.5rem; padding:.7rem .85rem;">
+        <div style="font-size:.78rem; font-weight:800; color:#DC2626; margin-bottom:.3rem;">④ ナレッジが残る</div>
+        <div style="font-size:.7rem; color:var(--mute); line-height:1.7;">退職・異動でも情報は組織に残る。「人が辞めても会社の力は減らない」状態を作る。</div>
+      </div>
+    </div>
+
+    <!-- 既製SaaS vs 自社SaaS の使い分け -->
+    <h3 style="font-size:.85rem; font-weight:800; color:var(--navy); margin-bottom:.5rem; letter-spacing:.03em;">▌ 2種類のSaaSを使い分ける ── 買うものと、作るもの</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-bottom:.9rem;">
+      <!-- 既製SaaS -->
+      <div style="background:#F0F9FF; border:1.5px solid #60A5FA; border-radius:.6rem; padding:.85rem 1rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.8rem; font-weight:800; color:#1D4ED8;">既製SaaS ＝ 買う</div>
+          <div style="font-size:.6rem; font-weight:700; color:#1D4ED8; background:#DBEAFE; padding:.2rem .5rem; border-radius:.35rem;">汎用業務</div>
+        </div>
+        <div style="font-size:.7rem; color:var(--text); line-height:1.75; margin-bottom:.5rem;">法規制対応・どの会社でも同じ機能で済む業務。すでに完成度が高く、安価。<strong>自分で作る理由がない。</strong></div>
+        <div style="display:flex; gap:.4rem; flex-wrap:wrap;">
+          <span style="font-size:.65rem; background:#fff; color:#1D4ED8; padding:.2rem .5rem; border:1px solid #93C5FD; border-radius:.3rem;">弥生会計</span>
+          <span style="font-size:.65rem; background:#fff; color:#1D4ED8; padding:.2rem .5rem; border:1px solid #93C5FD; border-radius:.3rem;">勤革時</span>
+          <span style="font-size:.65rem; background:#fff; color:#1D4ED8; padding:.2rem .5rem; border:1px solid #93C5FD; border-radius:.3rem;">楽楽精算</span>
+        </div>
+      </div>
+      <!-- 自社SaaS -->
+      <div style="background:#F0FDF4; border:1.5px solid #4ADE80; border-radius:.6rem; padding:.85rem 1rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem;">
+          <div style="font-size:.8rem; font-weight:800; color:#16A34A;">自社SaaS ＝ 作る</div>
+          <div style="font-size:.6rem; font-weight:700; color:#166534; background:#DCFCE7; padding:.2rem .5rem; border-radius:.35rem;">業務固有</div>
+        </div>
+        <div style="font-size:.7rem; color:var(--text); line-height:1.75; margin-bottom:.5rem;">ナカオ工業ならではの業務（オートフロアの設計・製造・サービス）。<strong>競争優位の源泉</strong>。外部SaaSでは絶対に対応できない。</div>
+        <div style="display:flex; gap:.4rem; flex-wrap:wrap;">
+          <span style="font-size:.65rem; background:#fff; color:#16A34A; padding:.2rem .5rem; border:1px solid #86EFAC; border-radius:.3rem;">CRM</span>
+          <span style="font-size:.65rem; background:#fff; color:#16A34A; padding:.2rem .5rem; border:1px solid #86EFAC; border-radius:.3rem;">工程管理</span>
+          <span style="font-size:.65rem; background:#fff; color:#16A34A; padding:.2rem .5rem; border:1px solid #86EFAC; border-radius:.3rem;">BOM</span>
+          <span style="font-size:.65rem; background:#fff; color:#16A34A; padding:.2rem .5rem; border:1px solid #86EFAC; border-radius:.3rem;">SFA</span>
+          <span style="font-size:.65rem; background:#fff; color:#16A34A; padding:.2rem .5rem; border:1px solid #86EFAC; border-radius:.3rem;">アフターサービス</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 既存：継続運用と廃止予定 -->
+    <div class="saas-map-wrap" style="display:flex; gap:1rem; align-items:stretch; flex-wrap:wrap;">
+
+      <!-- 外部SaaS継続 -->
+      <div class="saas-layer sl-ext" style="flex:1; min-width:260px;">
+        <div class="saas-layer-title">継続運用 ― 既製SaaSで賄えるもの</div>
+        <div class="card-row">
+          <div class="sc sc-ext">弥生会計<sub>会計管理</sub></div>
+          <div class="sc sc-ext">勤革時<sub>勤怠管理</sub></div>
+          <div class="sc sc-chk">ラクス楽楽精算<sub>経費管理（検討中）</sub></div>
+        </div>
+      </div>
+
+      <!-- 廃止予定 -->
+      <div class="saas-layer sl-ret" style="flex:1; min-width:260px;">
+        <div class="saas-layer-title">廃止予定 ― 自社SaaS完成後に段階廃止</div>
+        <div class="card-row">
+          <div class="sc sc-ret" style="flex:1;">販売らくだ<sub>見積もり管理・アフターサービス管理<br>EOS済・連携ゼロ → 属人化の根源</sub></div>
+          <div class="sc sc-ret" style="flex:1;">顧客大臣<sub>顧客管理・アフターサービス（SEJのみ）<br>年100万円 → CRM完成後に廃止</sub></div>
+        </div>
+      </div>
+
+    </div><!-- /saas-map-wrap (mission-saas) -->
+  </div><!-- /inner-wide (mission-saas) -->
+</section><!-- /mission-saas -->
+
+<!-- ── Mission: 自社SaaS システム構成 ── -->
+<section id="mission-saas-sys">
+  <div class="slide-label"><span class="sl-num">14 / 16</span> <span style="color:#4ADE80">MISSION</span> ／ 自社SaaSシステム構成</div>
+  <div class="inner-wide">
+    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <h2 class="sec-title" style="font-size:clamp(1rem,1.8vw,1.4rem); margin-bottom:.4rem;">自社SaaSシステム構成</h2>
+    <div class="divider-m"></div>
+
+    <!-- ステータス凡例 -->
+    <div style="display:flex; gap:.55rem; margin-bottom:.7rem; align-items:center; flex-wrap:wrap;">
+      <span style="font-size:.7rem; color:var(--mute); font-weight:700; letter-spacing:.08em;">STATUS:</span>
+      <span style="background:#e8f5e9; border:1.5px solid #2e7d32; border-radius:2rem; font-size:.72rem; font-weight:800; color:#1b5e20; padding:.18rem .65rem;">✅ 稼働中</span>
+      <span style="background:#e3f2fd; border:1.5px solid #1565C0; border-radius:2rem; font-size:.72rem; font-weight:800; color:#0d47a1; padding:.18rem .65rem;">🔵 構築中</span>
+      <span style="background:#fff8e1; border:1.5px solid #ef6c00; border-radius:2rem; font-size:.72rem; font-weight:800; color:#e65100; padding:.18rem .65rem;">🟡 整備中</span>
+      <span style="background:#f5f5f5; border:1.5px solid #9e9e9e; border-radius:2rem; font-size:.72rem; font-weight:800; color:#616161; padding:.18rem .65rem;">⬜ 未着手</span>
+    </div>
+
+    <!-- Row1: 顧客・営業接点 -->
+    <div style="background:#ECEEF7; border-radius:.65rem; padding:.75rem .9rem; margin-bottom:0; border:1.5px solid #c5cae9;">
+      <div style="font-size:.7rem; font-weight:800; color:#303f9f; letter-spacing:.15em; margin-bottom:.6rem;">営業・顧客接点</div>
+      <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:.65rem; align-items:center;">
+        <div style="background:#e3f2fd; border:2.5px solid #1565C0; border-radius:.55rem; padding:.85rem .9rem; text-align:center; box-shadow:0 3px 10px rgba(21,101,192,.15);">
+          <div style="font-size:.92rem; font-weight:800; color:#0d47a1;">営業支援 (SFA)</div>
+          <div style="font-size:.74rem; color:#1565C0; margin-top:.3rem;">🔵 プロトタイプ稼働中</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#1565C0; color:#fff; font-size:1.25rem; font-weight:900; padding:.3rem .6rem; border-radius:.38rem; line-height:1; box-shadow:0 2px 6px rgba(21,101,192,.45);">→</div>
+        </div>
+        <div style="background:#e3f2fd; border:2.5px solid #1565C0; border-radius:.55rem; padding:.85rem .9rem; text-align:center; box-shadow:0 3px 10px rgba(21,101,192,.15);">
+          <div style="font-size:.92rem; font-weight:800; color:#0d47a1;">顧客管理 (CRM)</div>
+          <div style="font-size:.74rem; color:#1565C0; margin-top:.3rem;">🔵 プロトタイプ稼働中（997社）</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#78909c; color:#fff; font-size:1.25rem; font-weight:900; padding:.3rem .6rem; border-radius:.38rem; line-height:1;">→</div>
+        </div>
+        <div style="background:#fafafa; border:2px solid #bdbdbd; border-radius:.55rem; padding:.85rem .9rem; text-align:center;">
+          <div style="font-size:.92rem; font-weight:800; color:#424242;">見積もり管理</div>
+          <div style="font-size:.74rem; color:#9e9e9e; margin-top:.3rem;">未着手（販売らくだ廃止）</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#78909c; color:#fff; font-size:1.25rem; font-weight:900; padding:.3rem .6rem; border-radius:.38rem; line-height:1;">→</div>
+        </div>
+        <div style="background:#fff8e1; border:2px dashed #ef6c00; border-radius:.55rem; padding:.85rem .9rem; text-align:center;">
+          <div style="font-size:.92rem; font-weight:800; color:#e65100;">受注 → 設計指示</div>
+          <div style="font-size:.74rem; color:#bf6000; margin-top:.3rem;">CRMから設計へつなぐ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- コネクタ: Row1→Row2 (緑) -->
+    <div style="display:flex; flex-direction:column; align-items:center; margin:.18rem 0;">
+      <div style="width:4px; height:14px; background:#2e7d32; border-radius:2px;"></div>
+      <div style="background:#2e7d32; color:#fff; font-size:.74rem; font-weight:800; padding:.25rem .8rem; border-radius:.38rem; box-shadow:0 2px 5px rgba(46,125,50,.35); margin:.12rem 0;">↓ 製造No.で紐づく</div>
+      <div style="width:4px; height:14px; background:#2e7d32; border-radius:2px;"></div>
+    </div>
+
+    <!-- Row2: 機器マスタ (中央) -->
+    <div style="display:flex; justify-content:center; margin-bottom:.15rem;">
+      <div style="background:linear-gradient(135deg,#1B2A4A 0%,#263650 100%); border-radius:.65rem; padding:.78rem 3.2rem; text-align:center; border:2px solid #4a6080; box-shadow:0 4px 14px rgba(0,0,0,.3);">
+        <div style="color:#90caf9; font-size:.74rem; font-weight:800; letter-spacing:.15em; margin-bottom:.12rem;">HUB</div>
+        <div style="color:#fff; font-size:1.05rem; font-weight:800;">機器マスタ（製造No.）</div>
+        <div style="color:#b0bec5; font-size:.72rem; margin-top:.18rem;">顧客台帳（CRM）と製品BOM（品目マスター）を繋ぐ橋渡し</div>
+      </div>
+    </div>
+
+    <!-- T字コネクタ: Row2→Row3 -->
+    <div style="position:relative; height:56px; margin:.05rem 0;">
+      <div style="position:absolute; top:0; left:50%; width:4px; height:28px; background:#37474f; transform:translateX(-50%); border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:25%; width:25%; height:4px; background:#c62828; border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:25%; width:4px; height:28px; background:#c62828; transform:translateX(-50%); border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:50%; width:25%; height:4px; background:#1565C0; border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:75%; width:4px; height:28px; background:#1565C0; transform:translateX(-50%); border-radius:2px;"></div>
+    </div>
+
+    <!-- Row3: アフターサービス履歴 + E-BOM -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-bottom:0;">
+      <div style="background:#fff5f5; border:2.5px solid #c62828; border-top:5px solid #c62828; border-radius:.65rem; padding:.95rem 1.1rem; position:relative; box-shadow:0 3px 10px rgba(198,40,40,.13);">
+        <div style="position:absolute; top:-.6rem; left:.85rem; background:#c62828; color:#fff; font-size:.72rem; font-weight:800; padding:.18rem .7rem; border-radius:.32rem;">アフターサービス履歴</div>
+        <div style="font-size:.95rem; font-weight:800; color:#b71c1c; margin-bottom:.35rem; margin-top:.15rem;">修理・保守記録（サービス視点）</div>
+        <div style="font-size:.78rem; color:#c62828; line-height:1.8;">修理・部品交換の記録 ／ 販売価格・保守価格履歴を統合<br>野田課長 Excel → SaaS化予定</div>
+        <div style="display:flex; align-items:center; gap:.5rem; margin-top:.6rem;">
+          <div style="flex:1; height:2.5px; background:#c62828; border-radius:2px;"></div>
+          <div style="background:#c62828; color:#fff; font-size:.74rem; font-weight:800; padding:.22rem .72rem; border-radius:.35rem; box-shadow:0 2px 5px rgba(198,40,40,.35);">↓ S-BOM へ</div>
+          <div style="flex:1; height:2.5px; background:#c62828; border-radius:2px;"></div>
+        </div>
+      </div>
+      <div style="background:#e3f2fd; border:2.5px solid #1565C0; border-top:5px solid #1565C0; border-radius:.65rem; padding:.95rem 1.1rem; position:relative; box-shadow:0 3px 10px rgba(21,101,192,.13);">
+        <div style="position:absolute; top:-.6rem; left:.85rem; background:#1565C0; color:#fff; font-size:.72rem; font-weight:800; padding:.18rem .7rem; border-radius:.32rem;">① E-BOM</div>
+        <div style="font-size:.95rem; font-weight:800; color:#0d47a1; margin-bottom:.35rem; margin-top:.15rem;">設計・図面（機能で見る）</div>
+        <div style="font-size:.78rem; color:#1565c0; line-height:1.8;">図面・技術文書管理 ／ 知財管理<br>🔵 BOM SaaS構築中（中尾・津田）</div>
+        <div style="display:flex; align-items:center; gap:.5rem; margin-top:.6rem;">
+          <div style="flex:1; height:2.5px; background:#ef6c00; border-radius:2px;"></div>
+          <div style="background:#ef6c00; color:#fff; font-size:.74rem; font-weight:800; padding:.22rem .72rem; border-radius:.35rem; box-shadow:0 2px 5px rgba(239,108,0,.35);">→ M-BOM へ</div>
+          <div style="flex:1; height:2.5px; background:#ef6c00; border-radius:2px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row3→Row4 コネクタ -->
+    <div style="position:relative; height:30px; margin:.05rem 0;">
+      <div style="position:absolute; top:0; left:25%; width:4px; height:30px; background:#c62828; transform:translateX(-50%); border-radius:2px;"></div>
+      <div style="position:absolute; top:0; left:75%; width:4px; height:30px; background:#ef6c00; transform:translateX(-50%); border-radius:2px;"></div>
+    </div>
+
+    <!-- Row4: BOM Lifecycle -->
+    <div style="background:#f8faff; border:2px solid #b0bec5; border-radius:.7rem; padding:.8rem .9rem;">
+      <!-- 仕事の進む方向: BOM linear flow (E→M→BOP→S) -->
+      <div style="background:#fff; border:1.5px dashed #90a4ae; border-radius:.5rem; padding:.5rem .7rem; margin-bottom:.65rem;">
+        <div style="display:flex; align-items:center; gap:.55rem; justify-content:center; flex-wrap:wrap;">
+          <span style="font-size:.68rem; font-weight:800; color:#37474f; letter-spacing:.08em;">仕事の進む方向 →</span>
+          <span style="background:#1565C0; color:#fff; font-size:.7rem; font-weight:800; padding:.18rem .55rem; border-radius:.3rem;">① E-BOM 設計</span>
+          <span style="color:#37474f; font-weight:900;">▶</span>
+          <span style="background:#ef6c00; color:#fff; font-size:.7rem; font-weight:800; padding:.18rem .55rem; border-radius:.3rem;">② M-BOM 調達</span>
+          <span style="color:#37474f; font-weight:900;">▶</span>
+          <span style="background:#2e7d32; color:#fff; font-size:.7rem; font-weight:800; padding:.18rem .55rem; border-radius:.3rem;">③ BOP 製造</span>
+          <span style="color:#37474f; font-weight:900;">▶</span>
+          <span style="background:#c62828; color:#fff; font-size:.7rem; font-weight:800; padding:.18rem .55rem; border-radius:.3rem;">④ S-BOM 保守</span>
+        </div>
+        <div style="text-align:center; font-size:.66rem; color:#546e7a; margin-top:.3rem;">中心は <strong style="color:#263238;">品目マスター（BOM HUB）</strong> ── どのBOMも同じマスターを業務ごとに組み直したもの</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:.7rem; align-items:center; margin-bottom:.5rem;">
+        <div style="background:#ffebee; border:2.5px solid #c62828; border-top:5px solid #c62828; border-radius:.58rem; padding:.85rem .95rem; position:relative; text-align:center; box-shadow:0 2px 7px rgba(198,40,40,.12);">
+          <div style="position:absolute; top:-.58rem; left:.7rem; background:#c62828; color:#fff; font-size:.7rem; font-weight:800; padding:.15rem .58rem; border-radius:.3rem;">④ S-BOM</div>
+          <div style="font-size:.92rem; font-weight:800; color:#b71c1c; margin-bottom:.25rem; margin-top:.15rem;">サービス（故障で見る）</div>
+          <div style="font-size:.74rem; color:#c62828; line-height:1.8;">修理履歴・部品寿命・クレーム<br>アフターサービス履歴を集計 → 設計改善へ</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#455a64; color:#fff; font-size:1.55rem; font-weight:900; padding:.22rem .55rem; border-radius:.4rem; line-height:1; box-shadow:0 3px 7px rgba(69,90,100,.38);">⇔</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#263238 0%,#37474f 100%); border-radius:.62rem; padding:.85rem .95rem; text-align:center; border:2px solid #546e7a; box-shadow:0 4px 12px rgba(0,0,0,.22);">
+          <div style="color:#80cbc4; font-size:.7rem; font-weight:800; letter-spacing:.22em; margin-bottom:.2rem;">BOM HUB</div>
+          <div style="color:#fff; font-size:1.02rem; font-weight:800; margin-bottom:.2rem;">品目マスター</div>
+          <div style="color:#b0bec5; font-size:.72rem; line-height:1.7;">形状・コスト・材質・履歴<br>機器マスタ経由でCRM連結</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <div style="background:#455a64; color:#fff; font-size:1.55rem; font-weight:900; padding:.22rem .55rem; border-radius:.4rem; line-height:1; box-shadow:0 3px 7px rgba(69,90,100,.38);">⇔</div>
+        </div>
+        <div style="background:#fff8e1; border:2.5px solid #ef6c00; border-top:5px solid #ef6c00; border-radius:.58rem; padding:.85rem .95rem; position:relative; text-align:center; box-shadow:0 2px 7px rgba(239,108,0,.12);">
+          <div style="position:absolute; top:-.58rem; left:.7rem; background:#ef6c00; color:#fff; font-size:.7rem; font-weight:800; padding:.15rem .58rem; border-radius:.3rem;">② M-BOM</div>
+          <div style="font-size:.92rem; font-weight:800; color:#e65100; margin-bottom:.25rem; margin-top:.15rem;">調達（お金で見る）</div>
+          <div style="font-size:.74rem; color:#bf6000; line-height:1.8;">調達管理 ／ 原価管理<br>🟡 整備中</div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0 .7rem; margin-bottom:.5rem;">
+        <div style="background:#c62828; color:#fff; font-size:.74rem; font-weight:800; padding:.25rem .72rem; border-radius:.35rem; box-shadow:0 2px 5px rgba(198,40,40,.32);">⚡ 設計改善フィードバック ↑</div>
+        <div style="background:#ef6c00; color:#fff; font-size:.74rem; font-weight:800; padding:.25rem .72rem; border-radius:.35rem; box-shadow:0 2px 5px rgba(239,108,0,.32);">調達 → 製造 ↓</div>
+      </div>
+      <div style="display:flex; justify-content:center;">
+        <div style="background:#e8f5e9; border:2.5px solid #2e7d32; border-radius:.58rem; padding:.8rem 2.2rem; position:relative; text-align:center; min-width:55%; box-shadow:0 3px 10px rgba(46,125,50,.14);">
+          <div style="position:absolute; top:-.58rem; left:.7rem; background:#2e7d32; color:#fff; font-size:.7rem; font-weight:800; padding:.15rem .58rem; border-radius:.3rem;">③ BOP</div>
+          <div style="font-size:.92rem; font-weight:800; color:#1b5e20; margin-bottom:.2rem;">製造（工程で見る）</div>
+          <div style="font-size:.74rem; color:#2e7d32;">製造工程管理 ／ 在庫管理 ／ 工数管理 ／ ✅ 稼働中（山田係長／岡田・古田）</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FUTURE
+══════════════════════════════════ -->
+<section id="future">
+  <div class="slide-label"><span class="sl-num">15 / 16</span> <span style="color:rgba(255,255,255,.5)">FUTURE</span> ／ 向かう姿</div>
+  <div class="inner">
+    <h2 class="future-h">向かう姿</h2>
+    <p class="future-ld">50年後も選ばれる会社をつくります。それは今日の仕事の積み重ねの先にあります。</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2026 — 近期</div>
+        <span class="tl-layer s">STRATEGY</span>
+        <div class="tl-title">組織の土台を固める</div>
+        <div class="tl-desc">マーケティング開発部の発足（6月〜）。DX基盤（BOM・CRM・工程管理）の拡張。各リーダーがビジョンと自分の仕事を繋げて動けるチームへ。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2028〜2032 — 中期</div>
+        <span class="tl-layer s">STRATEGY + MISSION</span>
+        <div class="tl-title">国内シェアの拡大と海外の定着</div>
+        <div class="tl-desc">まだオートフロアを知らない業界・地域へ。東南アジアを突破口にアジアへ。協働開発が新市場を開きます。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2035〜 — 長期</div>
+        <span class="tl-layer v">VISION</span>
+        <div class="tl-title">機械からデータへ。貢献の形を進化させる</div>
+        <div class="tl-desc">IoT・センサーで現場をデータ化し、壊れる前に直せる会社へ。製品を売るだけでなく、現場の安全と生産性を守るパートナーへと進化します。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2076 — 50年後</div>
+        <span class="tl-layer v">VISION</span>
+        <div class="tl-title">50年後も、お客様に選ばれている</div>
+        <div class="tl-desc">個人の力に依存せず、組織の仕組みと文化で動く会社。社員が誇りを持ち、お客様が信頼し、社会に必要とされている——そういう会社を、今つくっています。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Closing ── -->
+<section id="closing">
+  <div class="slide-label" style="background:rgba(27,42,74,.92);color:rgba(255,255,255,.9);border-bottom-color:rgba(255,255,255,.15);"><span class="sl-num" style="opacity:.7;">16 / 16</span> あなたの仕事が、社会を動かしています</div>
+  <div class="inner" style="text-align:center">
+    <p class="closing-big">あなたの仕事が、<br><em>社会を動かしています。</em></p>
+    <div class="closing-divider"></div>
+    <p class="closing-sub">
+      製品を直す。品質を守る。お客様に届ける。数字を管理する。<br>
+      どの仕事も、最終的にはトラックの現場で働く誰かの、<br>
+      体の負担を減らし、誇りを守ることにつながっています。<br><br>
+      それがナカオ工業の仕事の本質です。
+    </p>
+    <div class="closing-name">中尾憲吾 ／ ナカオ工業株式会社</div>
+    <div class="closing-date">2026年5月</div>
+  </div>
+</section>
+
+<!-- ── ボトムナビ ── -->
+<div class="slide-foot">
+  <button class="slide-btn" id="btn-prev">← 前へ</button>
+  <div class="slide-dots" id="slide-dots"></div>
+  <span class="slide-count" id="slide-count">1 / 16</span>
+  <span class="slide-foot-tag sft-v" id="slide-layer-tag">INTRO</span>
+  <div class="zoom-ctrl">
+    <button class="zoom-btn" id="btn-zoom-out" title="縮小">A−</button>
+    <span class="zoom-val" id="zoom-val">100%</span>
+    <button class="zoom-btn" id="btn-zoom-in" title="拡大">A+</button>
+  </div>
+  <button class="slide-btn" id="btn-next">次へ →</button>
+</div>
+
+<script>
+(function() {
+  const SLIDES = [
+    { id: 'hero',              layer: '',  label: 'INTRO' },
+    { id: 'vision-quote',      layer: 'v', label: 'VISION' },
+    { id: 'layer-map',         layer: 'v', label: 'VISION' },
+    { id: 'vision-why',        layer: 'v', label: 'VISION' },
+    { id: 'strategy-pillars',  layer: 's', label: 'STRATEGY' },
+    { id: 'strategy-phases',   layer: 's', label: 'STRATEGY' },
+    { id: 'strategy-dx-why',   layer: 's', label: 'STRATEGY' },
+    { id: 'strategy-dx-loop',  layer: 's', label: 'STRATEGY' },
+    { id: 'strategy-bom-arch', layer: 's', label: 'STRATEGY' },
+    { id: 'mission-dept',          layer: 'm', label: 'MISSION' },
+    { id: 'mission-manufacturing', layer: 'm', label: 'MISSION' },
+    { id: 'mission-nakao',         layer: 'm', label: 'MISSION' },
+    { id: 'mission-saas',          layer: 'm', label: 'MISSION' },
+    { id: 'mission-saas-sys',  layer: 'm', label: 'MISSION' },
+    { id: 'future',            layer: 'f', label: 'FUTURE' },
+    { id: 'closing',           layer: 'f', label: 'FIN' },
+  ];
+
+  const sections = SLIDES.map(s => document.getElementById(s.id));
+  const dotsWrap = document.getElementById('slide-dots');
+  const countEl  = document.getElementById('slide-count');
+  const tagEl    = document.getElementById('slide-layer-tag');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const navLinks = document.querySelectorAll('.nav-layer');
+  let cur = 0;
+
+  /* ドット生成 */
+  const dots = SLIDES.map((s, i) => {
+    const d = document.createElement('button');
+    d.className = 'slide-dot';
+    d.setAttribute('data-layer', s.layer);
+    d.setAttribute('aria-label', s.label);
+    d.onclick = () => go(i);
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  /* ナビリンクのジャンプ先 */
+  const NAV_MAP = {
+    '#vision-quote':     1,
+    '#strategy-pillars': 4,
+    '#mission-dept':     9,
+    '#future':           13,
+  };
+  navLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    if (NAV_MAP[href] !== undefined) {
+      a.addEventListener('click', e => { e.preventDefault(); go(NAV_MAP[href]); });
+    }
+  });
+
+  /* タグスタイル */
+  const TAG_CLASS = { v: 'sft-v', s: 'sft-s', m: 'sft-m', f: 'sft-f', '': 'sft-f' };
+
+  /* ── 自動フィットズーム ── */
+  const zoomValEl = document.getElementById('zoom-val');
+  // section の padding-bottom(1rem≈16px) + 余裕 4px = 20px バッファを引く
+  const AVAIL_H   = window.innerHeight - 52 - 56 - 20; // nav(52) + footer(56) + buffer(20)
+  // ページロード時（--zoom:1）に全スライドのコンテンツ高さを測定
+  const contentH  = sections.map(s => {
+    const el = s.querySelector('.inner, .inner-wide, .quote-inner');
+    return el ? el.scrollHeight : 0;
+  });
+  let userDelta = 0; // A−/A+ による手動補正値
+  function applyZoom(z) {
+    document.documentElement.style.setProperty('--zoom', z);
+    if (zoomValEl) zoomValEl.textContent = Math.round(z * 100) + '%';
+  }
+  function fitZoom(idx) {
+    const h    = contentH[idx];
+    const auto = (!h || h <= AVAIL_H) ? 1.0
+               : Math.max(0.55, parseFloat((AVAIL_H / h).toFixed(3)));
+    const z    = Math.min(1.05, Math.max(0.55, auto + userDelta));
+    applyZoom(z);
+  }
+
+  function go(n) {
+    if (n < 0 || n >= SLIDES.length) return;
+    const prev = cur;
+    cur = n;
+
+    sections[prev].classList.remove('is-current');
+    if (prev < cur) sections[prev].classList.add('is-prev');
+    sections[prev].scrollTop = 0;
+
+    sections[cur].classList.remove('is-prev');
+    sections[cur].classList.add('is-current');
+
+    /* 非表示スライドを整理 */
+    sections.forEach((s, i) => {
+      if (i !== cur && i !== prev) {
+        s.classList.remove('is-current', 'is-prev');
+      }
+    });
+
+    /* UI 更新 */
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    countEl.textContent = `${cur + 1} / ${SLIDES.length}`;
+    tagEl.textContent   = SLIDES[cur].label;
+    tagEl.className     = 'slide-foot-tag ' + (TAG_CLASS[SLIDES[cur].layer] || 'sft-f');
+    btnPrev.disabled    = cur === 0;
+    btnNext.disabled    = cur === SLIDES.length - 1;
+    fitZoom(cur); // スライドごとに自動フィット（暫定）
+
+    /* トランジション完了後に実スクロールで再チェック */
+    setTimeout(() => {
+      if (cur !== n) return;
+      const s = sections[n];
+      // section 自体がまだスクロールする場合のみ、zoom を少し絞る
+      // el.scrollHeight は CSS zoom に関係なく自然サイズで返るため、
+      // section.scrollHeight / section.clientHeight で補正率を計算する
+      if (s.scrollHeight > s.clientHeight + 4) {
+        const curZ = parseFloat(getComputedStyle(document.documentElement)
+                       .getPropertyValue('--zoom')) || 1;
+        const ratio = s.clientHeight / s.scrollHeight; // 必要な縮小率
+        const newZ  = Math.max(0.55, Math.min(1.05, curZ * ratio + userDelta));
+        applyZoom(newZ);
+      }
+    }, 420);
+  }
+
+  /* 初期化 */
+  sections.forEach(s => s.classList.remove('is-current', 'is-prev'));
+  go(0);
+
+  /* キーボード */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown'  || e.key === 'PageDown') go(cur + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp'    || e.key === 'PageUp')   go(cur - 1);
+  });
+
+  /* ボタン */
+  btnPrev.onclick = () => go(cur - 1);
+  btnNext.onclick = () => go(cur + 1);
+
+  /* ズームボタン（自動値への±補正） */
+  document.getElementById('btn-zoom-out').onclick = () => { userDelta -= 0.05; fitZoom(cur); };
+  document.getElementById('btn-zoom-in').onclick  = () => { userDelta += 0.05; fitZoom(cur); };
+
+  /* スワイプ（モバイル） */
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 45) dx > 0 ? go(cur + 1) : go(cur - 1);
+  });
+})();
+</script>
+
+</body>
+</html>
