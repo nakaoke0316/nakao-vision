@@ -532,8 +532,11 @@
       }
       /* 文末ごとの<br>を無効化し、句点で区切られた一続きの文章として自然に折り返す
          （PC向けの強制改行が、狭いモバイルでは行が短く割れて「塊」に見える問題の解消） */
+      .hero-desc br,
       #vision-quote blockquote br,
-      #layer-map .sec-lead br,
+      .sec-lead br,
+      #layer-map .ld-sub br,
+      #mission-nakao .nakao-ask br,
       .closing-sub br {
         display: none;
       }
@@ -1300,7 +1303,7 @@
     <!-- お願い -->
     <div style="background:#fff; border:1.5px solid #BBF7D0; border-radius:.6rem; padding:1.2rem 1.6rem; margin-bottom:1.6rem; font-size:.95rem; line-height:2;">
       <div style="font-weight:800; color:#166534; margin-bottom:.6rem;">皆さんにお願いしたいこと——</div>
-      <div style="color:var(--text);">
+      <div class="nakao-ask" style="color:var(--text);">
         「どうせ変わらない」と思わないでください。<br>
         現場で気になっていることがあれば、教えてください。小さな声が、設計を変え、仕組みを変えます。<br>
         変わり始めているのは、今です。
