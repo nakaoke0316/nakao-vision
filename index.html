@@ -567,6 +567,22 @@
       #mission-saas-sys div[style*="grid-template-columns"] > div[style*="justify-content:center"] > div {
         transform: rotate(90deg);
       }
+
+      /* slide 5（3本柱）：柱間の横矢印「→」を縦向き「↓」に回転（下のキャプションは回さない） */
+      #strategy-pillars div[style*="grid-template-columns"] > div[style*="justify-content:center"] {
+        margin: .2rem 0 !important;
+      }
+      #strategy-pillars div[style*="grid-template-columns"] > div[style*="justify-content:center"] > div:first-child {
+        transform: rotate(90deg);
+      }
+
+      /* slide 6（並走）：中央の「⇔」を縦向き「↕」に回転（下のキャプションは回さない） */
+      #strategy-phases div[style*="grid-template-columns"] > div[style*="justify-content:center"] {
+        margin: .2rem 0 !important;
+      }
+      #strategy-phases div[style*="grid-template-columns"] > div[style*="justify-content:center"] > div:first-child {
+        transform: rotate(90deg);
+      }
     }
 
     @media (max-width: 480px) {
