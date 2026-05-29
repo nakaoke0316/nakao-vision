@@ -530,6 +530,13 @@
       .closing-sub {
         text-align: left !important;
       }
+      /* 文末ごとの<br>を無効化し、句点で区切られた一続きの文章として自然に折り返す
+         （PC向けの強制改行が、狭いモバイルでは行が短く割れて「塊」に見える問題の解消） */
+      #vision-quote blockquote br,
+      #layer-map .sec-lead br,
+      .closing-sub br {
+        display: none;
+      }
 
       /* ヒーロー（slide 1） */
       .hero-catch { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; line-height: 1.4 !important; }
