@@ -437,7 +437,7 @@
       .quote-pills   { margin-top: 1.2rem; }
     }
 
-    /* ── モバイル（≤480px）上書き ── ※ 必ずすべてのCSSの最後に置く */
+    /* ── モバイル（≤480px）上書き：NAV/FOOTER ── */
     @media(max-width:480px) {
       /* NAV：ロゴを隠してナビリンクを均等配置 */
       .nav-logo { display: none; }
@@ -450,6 +450,75 @@
       .slide-foot { gap: .3rem; padding: 0 .5rem; }
       .slide-btn { font-size: .72rem; padding: .25rem .5rem; white-space: nowrap; }
       .slide-foot-tag { font-size: .58rem; padding: .15rem .4rem; }
+    }
+
+    /* ══════════════════════════════════
+       モバイル本格対応（≤768px・縦スクロール前提）
+    ══════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* 自動ズーム無効化：モバイルは縦スクロール前提 */
+      .inner, .inner-wide, .quote-inner { zoom: 1 !important; }
+
+      /* セクションパディング縮小 */
+      section { padding: 3rem 1rem 4rem !important; }
+
+      /* インラインの多列グリッドを1列に強制 */
+      section *[style*="grid-template-columns:1fr auto 1fr auto 1fr auto 1fr"],
+      section *[style*="grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr"],
+      section *[style*="grid-template-columns:1fr auto 1fr auto 1fr"],
+      section *[style*="grid-template-columns: 1fr auto 1fr auto 1fr"],
+      section *[style*="grid-template-columns:1fr auto 1fr"],
+      section *[style*="grid-template-columns: 1fr auto 1fr"],
+      section *[style*="grid-template-columns:1fr 1fr"],
+      section *[style*="grid-template-columns: 1fr 1fr"],
+      section *[style*="grid-template-columns:repeat(4"],
+      section *[style*="grid-template-columns: repeat(4"],
+      section *[style*="grid-template-columns:repeat(2"],
+      section *[style*="grid-template-columns: repeat(2"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* T字コネクタ等の絶対配置幹は非表示（縦並びでは意味なし） */
+      section div[style*="position:relative"][style*="height:30px"],
+      section div[style*="position:relative"][style*="height:32px"],
+      section div[style*="position:relative"][style*="height:36px"],
+      section div[style*="position:relative"][style*="height:52px"],
+      section div[style*="position:relative"][style*="height:56px"] {
+        display: none !important;
+      }
+
+      /* タイトル・リード文の可読サイズ確保 */
+      .sec-title {
+        font-size: clamp(1.3rem, 6vw, 1.8rem) !important;
+        line-height: 1.4 !important;
+        margin-bottom: 0.8rem !important;
+      }
+      .sec-lead {
+        font-size: 1rem !important;
+        line-height: 1.85 !important;
+      }
+
+      /* ヒーロー（slide 1） */
+      .hero-catch { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; line-height: 1.4 !important; }
+      .hero-desc { font-size: .9rem !important; }
+      .hero-layer-bar { flex-wrap: wrap; justify-content: center; }
+
+      /* 3層構造図（slide 3）の文字サイズ */
+      .ld-title { font-size: 1.05rem !important; }
+      .ld-sub { font-size: .9rem !important; }
+      .ld-tag { font-size: .6rem !important; padding: .4rem .3rem !important; }
+
+      /* なぜここにいるのか（slide 4） */
+      .why-card h3 { font-size: 1rem !important; }
+      .why-card p { font-size: .9rem !important; }
+
+      /* 閉じスライド（slide 16） */
+      .closing-big { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; line-height: 1.5 !important; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 2.5rem .7rem 3.5rem !important; }
+      .sec-title { font-size: clamp(1.2rem, 6vw, 1.5rem) !important; }
     }
   </style>
 </head>
