@@ -539,6 +539,34 @@
 
       /* 閉じスライド（slide 16） */
       .closing-big { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; line-height: 1.5 !important; }
+
+      /* slide 8（情報ループ）：横並びの行を縦方向に強制し、上→下の流れにする */
+      #strategy-dx-loop div[style*="flex-wrap:wrap"] {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      #strategy-dx-loop div[style*="flex-wrap:wrap"] > div {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex: none !important;
+      }
+      /* 矢印バッジの行（justify-content:center の小箱）：横矢印「＋」「→」を縦向き「↓」に回転 */
+      #strategy-dx-loop div[style*="flex-wrap:wrap"] > div[style*="justify-content:center"] {
+        margin: .15rem 0 !important;
+      }
+      #strategy-dx-loop div[style*="flex-wrap:wrap"] > div[style*="justify-content:center"] > div {
+        transform: rotate(90deg);
+      }
+      /* 横スクロール枠を解除（縦並びでは不要） */
+      #strategy-dx-loop div[style*="overflow-x:auto"] { overflow-x: visible !important; }
+
+      /* slide 14（SaaS構成）：1列化したグリッド内の横矢印「→」を縦向き「↓」に回転 */
+      #mission-saas-sys div[style*="grid-template-columns"] > div[style*="justify-content:center"] {
+        margin: .15rem 0 !important;
+      }
+      #mission-saas-sys div[style*="grid-template-columns"] > div[style*="justify-content:center"] > div {
+        transform: rotate(90deg);
+      }
     }
 
     @media (max-width: 480px) {
