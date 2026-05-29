@@ -523,6 +523,14 @@
         line-height: 1.85 !important;
       }
 
+      /* 中央揃えの長文はモバイルで左揃え（中央折返しによる断片化＝「段落崩れ」を防ぐ）
+         見出し・短いキャッチは中央のまま維持する */
+      blockquote,
+      #layer-map .sec-lead,
+      .closing-sub {
+        text-align: left !important;
+      }
+
       /* ヒーロー（slide 1） */
       .hero-catch { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; line-height: 1.4 !important; }
       .hero-desc { font-size: .9rem !important; }
