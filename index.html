@@ -465,8 +465,9 @@
       /* セクション上部パディング0：ラベルをナビ直下に密着 */
       section { padding: 0 1rem 4rem !important; }
 
-      /* スライドラベルを不透明化（背後透けを防ぐ） */
+      /* スライドラベル：sticky解除して各スライド上部の静的ヘッダーに */
       .slide-label {
+        position: static !important;
         background: #fff !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
