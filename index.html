@@ -1160,7 +1160,7 @@
 
 <!-- ── Mission: Departments ── -->
 <section id="mission-dept">
-  <div class="slide-label"><span class="sl-num">10 / 18</span> <span style="color:#4ADE80">MISSION</span> ／ 各部門のミッション</div>
+  <div class="slide-label"><span class="sl-num">12 / 18</span> <span style="color:#4ADE80">MISSION</span> ／ 各部門のミッション</div>
   <div class="inner">
     <span class="layer-badge badge-m">MISSION ／ ミッション</span>
     <h2 class="sec-title">各部門のミッション</h2>
@@ -1220,13 +1220,13 @@
   </div>
 </section>
 
-<!-- ── Mission: 役職別能力要件 ── -->
-<section id="mission-role-ladder">
-  <div class="slide-label"><span class="sl-num">11 / 18</span> <span style="color:#4ADE80">MISSION</span> ／ 役職別能力要件</div>
+<!-- ── Strategy: 役職別能力要件 ── -->
+<section id="mission-role-ladder" style="background:#F8FAFC;">
+  <div class="slide-label" style="background:rgba(248,250,252,.95);"><span class="sl-num">10 / 18</span> <span style="color:#60A5FA">STRATEGY</span> ／ 役職別能力要件</div>
   <div class="inner">
-    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
     <h2 class="sec-title">役職は「使命の範囲」を定義する</h2>
-    <div class="divider-m"></div>
+    <div class="divider-s"></div>
     <p class="sec-lead">役職は偉さの序列ではありません。<strong>使命の範囲の違い</strong>です。<strong>課長以上は「使う側」</strong>——部下・時間・情報を使って目標を達成する責任を負います。</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start;">
@@ -1293,13 +1293,13 @@
   </div>
 </section>
 
-<!-- ── Mission: 専門家の成長ルート ── -->
-<section id="mission-pro-ladder">
-  <div class="slide-label"><span class="sl-num">12 / 18</span> <span style="color:#4ADE80">MISSION</span> ／ 専門家の成長ルート</div>
+<!-- ── Strategy: 専門家の成長ルート ── -->
+<section id="mission-pro-ladder" style="background:#F8FAFC;">
+  <div class="slide-label" style="background:rgba(248,250,252,.95);"><span class="sl-num">11 / 18</span> <span style="color:#60A5FA">STRATEGY</span> ／ 専門家の成長ルート</div>
   <div class="inner-wide">
-    <span class="layer-badge badge-m">MISSION ／ ミッション</span>
+    <span class="layer-badge badge-s">STRATEGY ／ 戦略</span>
     <h2 class="sec-title">プロフェッショナルとは何か</h2>
-    <div class="divider-m"></div>
+    <div class="divider-s"></div>
     <p class="sec-lead">技術・営業・製造——どの職種にも成長のルートがあります。会社はプロ・超プロを育てます。その先は、<strong>使命が変わる境地</strong>です。</p>
 
     <!-- 5段階ステップ -->
@@ -1806,9 +1806,9 @@
     { id: 'strategy-dx-why',   layer: 's', label: 'STRATEGY' },
     { id: 'strategy-dx-loop',  layer: 's', label: 'STRATEGY' },
     { id: 'strategy-bom-arch', layer: 's', label: 'STRATEGY' },
+    { id: 'mission-role-ladder',   layer: 's', label: 'STRATEGY' },
+    { id: 'mission-pro-ladder',    layer: 's', label: 'STRATEGY' },
     { id: 'mission-dept',          layer: 'm', label: 'MISSION' },
-    { id: 'mission-role-ladder',   layer: 'm', label: 'MISSION' },
-    { id: 'mission-pro-ladder',    layer: 'm', label: 'MISSION' },
     { id: 'mission-manufacturing', layer: 'm', label: 'MISSION' },
     { id: 'mission-nakao',         layer: 'm', label: 'MISSION' },
     { id: 'mission-saas',          layer: 'm', label: 'MISSION' },
@@ -1841,7 +1841,7 @@
   const NAV_MAP = {
     '#vision-quote':     1,
     '#strategy-pillars': 4,
-    '#mission-dept':     9,
+    '#mission-dept':     11,
     '#future':           16,
   };
   navLinks.forEach(a => {
