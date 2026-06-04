@@ -1229,12 +1229,15 @@
     <div class="divider-s"></div>
     <p class="sec-lead">役職は偉さの序列ではありません。<strong>使命の範囲の違い</strong>です。<strong>課長以上は「設計する側」</strong>——部下・時間・情報を率いて目標を達成する責任を負います。能力の階段は <strong style="color:#92400E;">ISO（会社の品質システム）をどう扱えるか</strong> で測ります。</p>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start;">
+    <div style="display:flex; flex-direction:column; gap:1rem;">
 
-      <!-- 左: 役職ラダー -->
+      <!-- バンド1: 役職ラダー（設計する側 | 実行する側） -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start;">
+
+      <!-- 設計する側 -->
       <div>
-        <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:.6rem; padding:.8rem 1rem; margin-bottom:.35rem;">
-          <div style="font-size:.62rem; font-weight:800; letter-spacing:.15em; color:#1D4ED8; margin-bottom:.55rem;">設計する側（課長以上）</div>
+        <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:.6rem; padding:.8rem 1rem;">
+          <div style="font-size:.62rem; font-weight:800; letter-spacing:.15em; color:#1D4ED8; margin-bottom:.55rem;">設計する側（課長以上）＝ 使う側（使用者側）</div>
           <div style="display:flex; flex-direction:column; gap:.3rem;">
             <div style="display:flex; align-items:flex-start; gap:.6rem; background:#fff; border:1px solid #DBEAFE; border-radius:.35rem; padding:.5rem .75rem;">
               <span style="background:#1B2A4A; color:#fff; font-size:.7rem; font-weight:800; padding:.15rem .55rem; border-radius:.25rem; white-space:nowrap; flex-shrink:0; margin-top:.1rem;">経営者</span>
@@ -1259,11 +1262,10 @@
             </div>
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:.5rem; margin:.25rem 0;">
-          <div style="flex:1; height:2px; background:#16A34A; opacity:.4;"></div>
-          <div style="background:#166534; color:#fff; font-size:.65rem; font-weight:800; padding:.15rem .65rem; border-radius:1rem; white-space:nowrap;">ここから「設計する側」</div>
-          <div style="flex:1; height:2px; background:#16A34A; opacity:.4;"></div>
-        </div>
+      </div>
+
+      <!-- 実行する側 -->
+      <div>
         <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:.6rem; padding:.8rem 1rem;">
           <div style="font-size:.62rem; font-weight:800; letter-spacing:.15em; color:#166534; margin-bottom:.55rem;">実行する側（係長以下）</div>
           <div style="display:flex; flex-direction:column; gap:.3rem;">
@@ -1299,8 +1301,10 @@
         </div>
       </div>
 
-      <!-- 右: 2系統 -->
-      <div style="display:flex; flex-direction:column; gap:.8rem;">
+      </div><!-- /バンド1 -->
+
+      <!-- バンド2: 評価軸（2軸 | 技能≠） -->
+      <div style="display:grid; grid-template-columns:1.25fr 1fr; gap:1rem; align-items:stretch;">
         <div style="background:var(--navy); color:var(--white); border-radius:.6rem; padding:1.1rem 1.2rem;">
           <div style="font-size:.65rem; font-weight:800; letter-spacing:.15em; color:#60A5FA; margin-bottom:.7rem;">2つの独立した評価軸</div>
           <div style="margin-bottom:.7rem;">
